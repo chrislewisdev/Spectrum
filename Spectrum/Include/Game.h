@@ -7,6 +7,8 @@
 #define SPECTRUM_GAME_H
 
 #include <GameState.h>
+#include "Player.h"
+
 
 class Game : public CEngine::GameState
 {
@@ -22,6 +24,10 @@ public:
 	void Exit();
 	//State Clone function
 	CEngine::State *Clone(CEngine::StateMachine *NewOwner) const;
+
+private:
+	//Creates the player
+	Player player;
 };
 
 #endif

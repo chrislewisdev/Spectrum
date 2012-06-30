@@ -32,13 +32,31 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);
 
-	if (ProgramControl::ProgramInput.GetKey(SDLK_LEFT));
+	//Apply gravity to the player every update.
+	player.ApplyGravity();
+
+	//Check for Player movement inputs
+	//Decided to use wasd since where using 1,2,3 to swap colours.
+	if (ProgramControl::ProgramInput.GetKey('a'))
+	{
+		player.Move();
+	}
+	else if (ProgramControl::ProgramInput.GetKey('d'))
+	{
+		player.Move();		
+	}
+	else if (ProgramControl::ProgramInput.GetKey('w'))
+	{
+		player.Move();
+	}
 
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
 		(*cdtr)->Update(deltaTime);
 	}
+
+	player.Draw();
 
 	//Draw all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
