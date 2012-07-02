@@ -6,13 +6,16 @@
 #include "Game.h"
 #include <ProgramControl.h>
 #include "ColouredObject.h"
+#include "Player.h"
+#include <GameObject.h>
+#include "Box2D.h"
 
 using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
-	: GameState(_Owner, _Storage)
+	: GameState(_Owner, _Storage), player(Box2D(100,100,50,50))
 {
-
+	
 }
 
 //State Enter function
@@ -37,18 +40,7 @@ void Game::Update(float deltaTime)
 
 	//Check for Player movement inputs
 	//Decided to use wasd since where using 1,2,3 to swap colours.
-	if (ProgramControl::ProgramInput.GetKey('a'))
-	{
-		player.Move();
-	}
-	else if (ProgramControl::ProgramInput.GetKey('d'))
-	{
-		player.Move();		
-	}
-	else if (ProgramControl::ProgramInput.GetKey('w'))
-	{
-		player.Move();
-	}
+	player.Move();
 
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
@@ -84,6 +76,5 @@ bool Game::WorldCollision(Box2D target)
 	{
 		if ((*cdtr)->BoundingBox().Overlap(target)) return true;
 	}
-
 	return false;
 }

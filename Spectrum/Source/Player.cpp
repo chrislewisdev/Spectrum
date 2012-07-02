@@ -6,15 +6,20 @@
 #include <Windows.h>
 #include <gl/GL.h>
 #include <SDL.h>
+#include <ProgramControl.h>
+
+using namespace CEngine;
 
 Player::Player()
 {
 
 }
-Player::Player(CEngine::Box2D boundingBox, float _xPos, float _yPos)
+
+Player::Player(Box2D _boundingBox)
 {
-	xPos = _xPos;
-	yPos = _yPos;
+	bounds = _boundingBox;
+	xVel = 0;
+	yVel = 0;
 }
 
 Player::~Player()
@@ -24,37 +29,31 @@ Player::~Player()
 
 void Player::Move()
 {
-	//Note: You should be using ProgramControl::ProgramInput.GetKey here, and just calling Player::Move() once from Game::Update
 	//Check for vertical movement
-	if(SDLK_UP)
+	if (ProgramControl::ProgramInput.GetKey('w'))
 	{
-		Jump();
+		//Jump();
 	}
-	//Check for horizontal movement
-	if (SDLK_LEFT)
+	else if (ProgramControl::ProgramInput.GetKey('a'))
 	{
-		xVel -= playerMoveSpeed;
+		bounds.pos.x -= playerMoveSpeed;
+		
 	}
-	else if (SDLK_RIGHT)
+	else if (ProgramControl::ProgramInput.GetKey('d'))
 	{
-		xVel += playerMoveSpeed;
-	}
-
-	//If we're jumping slow down the horizontal speed
-	if (xVel != 0.0f && yVel != 0)
-	{
-		xVel /= 1.5f;
-	}
-	xPos += xVel;
-	yPos += yVel;
+		bounds.pos.x += playerMoveSpeed;
+		
+	}	
+	bounds.pos.y += yVel;
 }
 
 //This function will draw the player
 void Player::Draw()
 {
 	//Draw our player-position point
-	glColor3f(10.0f, 10.0f, 10.0f);
+	glColor3f(.5f, 0, 0);
 	DrawBoundingBox();
+	
 }
 
 void Player::ApplyGravity()
@@ -62,7 +61,7 @@ void Player::ApplyGravity()
 	//Checks if the player is falling, if they are apply gravity.
 	if(!CheckOnSolidGround())
 	{
-		yVel -= GRAVITY;
+		bounds.pos.y += GRAVITY;
 	}
 }
 
@@ -91,5 +90,5 @@ bool Player::CheckOnSolidGround()
 		yVel = 5.0f;
 		return false
 	}*/
-	return true;//Only here to allow function to compile
+	return false;//Only here to allow function to compile
 }
