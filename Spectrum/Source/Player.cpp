@@ -3,6 +3,9 @@
 *Player.cpp by Joe Park
 *****************************************************************/
 #include "Player.h"
+#include <Windows.h>
+#include <gl/GL.h>
+#include <SDL.h>
 
 Player::Player()
 {
@@ -21,6 +24,7 @@ Player::~Player()
 
 void Player::Move()
 {
+	//Note: You should be using ProgramControl::ProgramInput.GetKey here, and just calling Player::Move() once from Game::Update
 	//Check for vertical movement
 	if(SDLK_UP)
 	{

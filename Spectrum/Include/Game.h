@@ -9,7 +9,6 @@
 #include <GameState.h>
 #include "Player.h"
 
-
 class Game : public CEngine::GameState
 {
 public:
@@ -24,6 +23,8 @@ public:
 	void Exit();
 	//State Clone function
 	CEngine::State *Clone(CEngine::StateMachine *NewOwner) const;
+	//This function checks if the target collides with anything in the world
+	bool WorldCollision(CEngine::Box2D target);
 
 private:
 	//Creates the player

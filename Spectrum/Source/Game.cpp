@@ -76,3 +76,14 @@ State *Game::Clone(StateMachine *NewOwner) const
 {
 	return new Game(NewOwner, GameStorage);
 }
+
+//This function checks for collision against all objects in the world
+bool Game::WorldCollision(Box2D target)
+{
+	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
+	{
+		if ((*cdtr)->BoundingBox().Overlap(target)) return true;
+	}
+
+	return false;
+}

@@ -71,12 +71,14 @@
     <ClCompile Include="Source\ColouredObject.cpp" />
     <ClCompile Include="Source\Entry.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\ColourBox.h" />
     <ClInclude Include="Include\ColouredObject.h" />
     <ClInclude Include="Include\ColourType.h" />
     <ClInclude Include="Include\Game.h" />
+    <ClInclude Include="Include\Player.h" />
     <ClInclude Include="Include\StateID.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
