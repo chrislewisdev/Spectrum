@@ -21,22 +21,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Control.AddState(STATE_GAME, StatePointer(new Game(&Control, Control.GetGameData())));
 	Control.ChangeState(STATE_GAME);
 
-	//Set up some temporary colour boxes
-	Box2D temp(64, 256, 128, 32);
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_WHITE)));
-	temp.pos.x = 480; temp.pos.y = 256; temp.size.x = 128;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_WHITE)));
-	temp.pos.x = 192; temp.pos.y = 320; temp.size.x = 96;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_WHITE)));
-	temp.pos.x = 64; temp.pos.y = 384; temp.size.x = 640;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_WHITE)));
-	temp.pos.x = 288; temp.pos.y = 320; temp.size.x = 64;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_RED)));
-	temp.pos.x = 352; temp.pos.y = 320; temp.size.x = 64;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_BLUE)));
-	temp.pos.x = 416; temp.pos.y = 320; temp.size.x = 64;
-	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_YELLOW)));
-
 	//Start up our main game loop
 	while (!Control.IsExiting())
 	{

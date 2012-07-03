@@ -10,6 +10,12 @@ using namespace CEngine;
 //Define our static currentColour variable
 ColourType ColouredObject::currentColour = COLOUR_NONE;
 
+ColouredObject::ColouredObject(ColourType c)
+	: colour(c)
+{
+
+}
+
 ColouredObject::ColouredObject(Box2D boundingBox, ColourType c)
 	: GameObject(boundingBox), colour(c)
 {

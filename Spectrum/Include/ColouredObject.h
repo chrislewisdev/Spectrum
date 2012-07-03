@@ -12,6 +12,7 @@
 class ColouredObject : public CEngine::GameObject
 {
 public:
+	ColouredObject(ColourType c);
 	ColouredObject(CEngine::Box2D boundingBox, ColourType c);
 
 	//Declare public functions
