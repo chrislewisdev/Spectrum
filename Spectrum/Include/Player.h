@@ -9,20 +9,25 @@
 #include "Box2D.h"
 
 //Gravitational Constant
-const float GRAVITY = 10.0;
+const float GRAVITY = 8.0;
 
 //Player Move Speed
-const float playerMoveSpeed = 5.0;
+const float playerMoveSpeed = 4.0;
 
 class Player: public CEngine::GameObject
 {
 public:
 	Player();
-	//Note: at the moment, you aren't actually calling this from Game. If you want to call it properly you should
-	//be calling it in the initialisation list for Game, e.g. Game::Game(blah, blah) : GameState(blah, blah), player(blah)
+	
 	Player(CEngine::Box2D _boundingBox);
 	
 	~Player();
+
+	//Returns the bounding box around the player
+	CEngine::Box2D GetBounds() const;
+
+	//Controls boolean that states if the player is standing on solid ground.
+	void setOnSolidGround(bool _OnSolidGround);
 
 	//Move the Player according to their keypress
 	void Move();
@@ -33,18 +38,20 @@ public:
 	//Apply Gravity to the player
 	void ApplyGravity();
 
-	//Perform the jump action
-	//No idea how to actually code this
+	//Perform the jump action, spends 5 frames going upwards.
 	void Jump();
 
-	//Check if Player's bottom side is not touching another object.
-	bool CheckOnSolidGround();
-
 private:
-	//Note: GameObject already defines a Box2D (called 'bounds') object for its positional data-
-	//this contains both a Vector2D for position and one for size. You don't need a new set of x/y values here
-	//This is also why your draw code doesn't work properly, because DrawBoundingBox() uses the bounds member
-	//to know where to draw
+	//boolean that states if the player is standing on solid ground.
+	bool onSolidGround;
+
+	//boolean that states if the player is in the middle of a jump
+	bool jumping;
+
+	//Used to track how long the player is in a certain animation; ie jumping
+	int frameCount;
+	
+	//Players velocity
 	float xVel,yVel;
 };
 

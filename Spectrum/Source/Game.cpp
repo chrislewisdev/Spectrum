@@ -13,7 +13,7 @@
 using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
-	: GameState(_Owner, _Storage), player(Box2D(100,100,50,50))
+	: GameState(_Owner, _Storage), player(Box2D(250,250,32,32))
 {
 	
 }
@@ -33,13 +33,22 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_2))
 		ColouredObject::SetCurrentColour(COLOUR_BLUE);
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
-		ColouredObject::SetCurrentColour(COLOUR_YELLOW);
+		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
-	//Apply gravity to the player every update.
-	player.ApplyGravity();
+	if(WorldCollisionBelow(player.GetBounds()))
+	{
+		player.setOnSolidGround(true);		
+	}
+	if(WorldCollisionAbove(player.GetBounds()))
+	{
+		//
+	}
+	else
+	{
+		player.setOnSolidGround(false);
+	}
 
 	//Check for Player movement inputs
-	//Decided to use wasd since where using 1,2,3 to swap colours.
 	player.Move();
 
 	//Update all GameObjects
@@ -75,6 +84,34 @@ bool Game::WorldCollision(Box2D target)
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
 		if ((*cdtr)->BoundingBox().Overlap(target)) return true;
+	}
+	return false;
+}
+
+//This function checks for collision against all objects in the world below the player
+bool Game::WorldCollisionBelow(Box2D target)
+{
+	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
+	{
+		if ((*cdtr)->BoundingBox().Overlap(target) && target.pos.y >= (*cdtr)->BoundingBox().pos.y -
+			player.GetBounds().size.y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+//This function checks for collision against all objects in the world below the player
+bool Game::WorldCollisionAbove(Box2D target)
+{
+	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
+	{
+		if ((*cdtr)->BoundingBox().Overlap(target) && target.pos.y <= (*cdtr)->BoundingBox().pos.y +
+			player.GetBounds().size.y)
+		{
+			return true;
+		}
 	}
 	return false;
 }
