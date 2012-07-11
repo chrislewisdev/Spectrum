@@ -15,6 +15,21 @@ ColourBox::ColourBox(Box2D boundingBox, ColourType c)
 
 }
 
+ColourBox::ColourBox(TiXmlElement *Object, ColourType c)
+	: ColouredObject(c)
+{
+	//Temp storage for queried XML attribute values
+	//Tiled stores all its co-ordinates as int so we use that even though our position data is stored as a float
+	int tempValue;
+
+	//Retrieve position and size values from our XML data
+	//There should ideally be some checking here, but since we're reading from Tiled we can guarantee that this data exists in the right format.
+	Object->QueryIntAttribute("x", &tempValue); bounds.pos.x = (float)tempValue;
+	Object->QueryIntAttribute("y", &tempValue); bounds.pos.y = (float)tempValue;
+	Object->QueryIntAttribute("width", &tempValue); bounds.size.x = (float)tempValue;
+	Object->QueryIntAttribute("height", &tempValue); bounds.size.y = (float)tempValue;
+}
+
 //This function updates our object
 void ColourBox::Update(float deltaTime)
 {

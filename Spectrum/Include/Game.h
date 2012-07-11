@@ -25,10 +25,16 @@ public:
 	CEngine::State *Clone(CEngine::StateMachine *NewOwner) const;
 	//This function checks if the target collides with anything in the world
 	bool WorldCollision(CEngine::Box2D target);
+<<<<<<< HEAD
 	//This function checks if the target collides with anything in the world
 	bool WorldCollisionBelow(CEngine::Box2D target);
 	//This function checks if the target collides with anything in the world
 	bool WorldCollisionAbove(CEngine::Box2D target);
+=======
+	//This function loads a map from the specified .tmx file
+	void LoadMap(std::string filename);
+
+>>>>>>> origin/master
 private:
 	//Creates the player
 	Player player;
