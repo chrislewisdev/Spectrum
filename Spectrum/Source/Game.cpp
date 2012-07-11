@@ -42,7 +42,6 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
-<<<<<<< HEAD
 	if(WorldCollisionBelow(player.GetBounds()))
 	{
 		player.setOnSolidGround(true);		
@@ -55,11 +54,8 @@ void Game::Update(float deltaTime)
 	{
 		player.setOnSolidGround(false);
 	}
-=======
 	//Apply gravity to the player every update.
 	//player.ApplyGravity();
->>>>>>> origin/master
-
 	//Check for Player movement inputs
 	player.Move();
 
@@ -100,7 +96,6 @@ bool Game::WorldCollision(Box2D target)
 	return false;
 }
 
-<<<<<<< HEAD
 //This function checks for collision against all objects in the world below the player
 bool Game::WorldCollisionBelow(Box2D target)
 {
@@ -127,7 +122,7 @@ bool Game::WorldCollisionAbove(Box2D target)
 		}
 	}
 	return false;
-=======
+}
 //This function loads a map from the specified .tmx file
 void Game::LoadMap(string filename)
 {
@@ -177,5 +172,4 @@ void Game::LoadMap(string filename)
 
 		Layer = Layer->NextSiblingElement();
 	}
->>>>>>> origin/master
 }
