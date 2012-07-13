@@ -72,6 +72,7 @@
     <ClCompile Include="Source\Entry.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\Torch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\ColourBox.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Include\Game.h" />
     <ClInclude Include="Include\Player.h" />
     <ClInclude Include="Include\StateID.h" />
+    <ClInclude Include="Include\Torch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

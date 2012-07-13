@@ -65,13 +65,14 @@ void Game::Update(float deltaTime)
 		(*cdtr)->Update(deltaTime);
 	}
 
-	player.Draw();
-
 	//Draw all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
 		(*cdtr)->Draw();
 	}
+
+	//Draw the player AFTER everything else to help with the alpha blending
+	player.Draw();
 }
 
 //State Exit function

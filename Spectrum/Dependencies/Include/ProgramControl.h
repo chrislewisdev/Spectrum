@@ -14,7 +14,7 @@
 
 namespace CEngine
 {
-	/// \brief Manages program flow and key game classes like GameControl and GameData. Used for running the main loop of your game.
+	/// \brief Manages program flow and key game classes like GameStates and GameData. Used for running the main loop of your game.
 	///
 	/// The ProgramControl class brings the various key game component classes together to run your game. It acts as they key State Machine
 	/// in your game and owns Game Data, the Game Control State Machine, Input and the Graphics Window. It should make up most of the necessary
