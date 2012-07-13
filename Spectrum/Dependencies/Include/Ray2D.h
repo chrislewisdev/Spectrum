@@ -26,11 +26,11 @@ namespace CEngine
 		/// \brief Checks if the target point lies on this ray.
 		/// \return True if the point lies on this ray, false if not.
 		bool Contains(const Vector2D& target) const;
-		/// \brief Checks for intersection against the target Ray and returns the point of intersection. If they don't intersect, throws
-		/// an exception.
+		/// \brief Checks for intersection against the target Ray and returns the point of intersection. If they don't intersect, returns
+		/// a 'No Intersection' constant.
 		///
 		/// \param target The ray to check for intersection with.
-		/// \return The point of intersection- if no intersection, returns the static const member Ray2D::NoIntersection.
+		/// \return The point of intersection- if no intersection, returns the const Collision::NoIntersection.
 		Vector2D IntersectionPoint(const Ray2D& target) const;
 		/// \brief Convenience function to check if two rays intersect without returning an intersection point.
 		/// \return True if they intersect, false if not.
@@ -41,9 +41,6 @@ namespace CEngine
 		Vector2D origin;
 		//! Vector dictating our Ray direction
 		Vector2D direction;
-
-		//! Declare a constant point used to indicate a non-existent intersection point between rays
-		static const Vector2D NoIntersection;
 	};
 }
 

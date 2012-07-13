@@ -11,11 +11,13 @@
 using namespace CEngine;
 
 Player::Player()
+	: torch(Vector2D(0, 0))
 {
 
 }
 
 Player::Player(Box2D _boundingBox)
+	: torch(_boundingBox.pos + _boundingBox.size/2)
 {
 	bounds = _boundingBox;
 	xVel = 0;
@@ -80,6 +82,11 @@ void Player::Move()
 	ApplyGravity();
 
 	xVel = playerMoveSpeed;	
+=======
+	//Make sure the torch stays centered on our character
+	torch.SetPosition(bounds.pos + bounds.size/2);
+	//Make the torch face the direction of the cursor
+	torch.FacePoint(ProgramControl::ProgramInput.GetMousePosition());
 }
 
 //This function will draw the player
@@ -87,7 +94,11 @@ void Player::Draw()
 {
 	//Draw our player-position point
 	glColor3f(.5f, 0, 0);
-	DrawBoundingBox();	
+	DrawBoundingBox();
+	glEnable(GL_BLEND);
+	glColor4f(0.7f, 0.7f, 0.7f, 0.5f);
+	torch.Draw();
+	glDisable(GL_BLEND);
 }
 
 void Player::ApplyGravity()

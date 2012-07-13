@@ -8,6 +8,8 @@
 #include "StateID.h"
 #include "Game.h"
 #include "ColourBox.h"
+#include <Windows.h>
+#include <gl/GL.h>
 
 using namespace CEngine;
 
@@ -16,6 +18,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//Create our Game Control and Window
 	ProgramControl Control("Spectrum", 800, 600);
 	GameData& Objects = *Control.GetGameData();
+
+	//Set up alpa-blending
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
 	//Set up our GameState in our program
 	Control.AddState(STATE_GAME, StatePointer(new Game(&Control, Control.GetGameData())));

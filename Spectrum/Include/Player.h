@@ -7,6 +7,7 @@
 
 #include <GameObject.h>
 #include "Box2D.h"
+#include "Torch.h"
 
 //Gravitational Constant
 const float GRAVITY = 8.0;
@@ -62,6 +63,9 @@ private:
 	
 	//Players velocity
 	float xVel,yVel;
+
+	//The Player's Torch!
+	Torch torch;
 };
 
 #endif

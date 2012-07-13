@@ -8,6 +8,8 @@
 #define CENGINE_GAMEOBJECT_H
 
 #include "Box2D.h"
+#include "Ray2D.h"
+#include "Circle2D.h"
 
 namespace CEngine
 {
@@ -47,8 +49,26 @@ namespace CEngine
 		virtual GameObject *Clone() const;
 		/// \brief Returns a copy of this object's bounding box.
 		///
-		/// \return A value copy our bounding box.
+		/// \return A value copy of our bounding box.
 		Box2D BoundingBox();
+		/// \brief Checks for a collision against another Box2D. Override this function to specify how your GameObject should collide with boxes.
+		/// Default behavaiour is to check the box against our bounding box.
+		///
+		/// \param target The Box2D to check against.
+		/// \return True for collision, false if not.
+		virtual bool CheckCollision(const Box2D& target);
+		/// \brief Checks for a collision against a Ray2D. Override this function to specify how your GameObject should collide with rays.
+		/// Default behaviour is to check the ray against our bounding box.
+		///
+		/// \param target The Ray2D to check against.
+		/// \return True for collision, false if not.
+		virtual bool CheckCollision(const Ray2D& target);
+		/// \brief Checks for a collision against a Circle2D. Override this function to specify how your GameObject should collide with circles.
+		/// Default behaviour is to check the circle against our bounding box.
+		///
+		/// \param target The Circle2D to check against.
+		/// \return True for collision, false if not.
+		virtual bool CheckCollision(const Circle2D& target);
 
 	protected:
 		//Declare protected functions
