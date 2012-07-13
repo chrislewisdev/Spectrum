@@ -17,17 +17,20 @@ const float playerMoveSpeed = 4.0;
 class Player: public CEngine::GameObject
 {
 public:
-	Player();
-	
+	//Constructors
+	Player();	
 	Player(CEngine::Box2D _boundingBox);
 	
+	//Destructor
 	~Player();
 
 	//Returns the bounding box around the player
 	CEngine::Box2D GetBounds() const;
 
-	//Controls boolean that states if the player is standing on solid ground.
-	void setOnSolidGround(bool _OnSolidGround);
+	//Set methods
+	void setOnSolidGround(bool _onSolidGround);
+	void setJumping(bool _jumping);
+	void setyVel(float _yVel);
 
 	//Move the Player according to their keypress
 	void Move();
@@ -40,6 +43,12 @@ public:
 
 	//Perform the jump action, spends 5 frames going upwards.
 	void Jump();
+
+	//The function that handles a collesion with an object below you
+	void ObjectBelow();
+
+	//The function that handles a collesion with an object above you
+	void ObjectAbove();
 
 private:
 	//boolean that states if the player is standing on solid ground.
