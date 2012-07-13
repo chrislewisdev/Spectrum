@@ -11,18 +11,14 @@
 using namespace CEngine;
 
 Player::Player()
-	: torch(Vector2D(0, 0))
+	: torch(Vector2D(0, 0)), PhysicsObject(bounds)
 {
 
 }
 
 Player::Player(Box2D _boundingBox)
-	: torch(_boundingBox.pos + _boundingBox.size/2)
-{
-	bounds = _boundingBox;
-	xVel = 0;
-	yVel = 0;
-	onSolidGround = false;
+	: torch(_boundingBox.pos + _boundingBox.size/2), PhysicsObject(_boundingBox)
+{	
 	jumping = false;
 	frameCount = 0;
 }
@@ -30,26 +26,6 @@ Player::Player(Box2D _boundingBox)
 Player::~Player()
 {
 
-}
-
-CEngine::Box2D Player::GetBounds() const
-{
-	return bounds;
-}
-
-void Player::setOnSolidGround(bool _onSolidGround)
-{
-	onSolidGround = _onSolidGround;
-}
-
-void Player::setJumping(bool _jumping)
-{
-	jumping = _jumping;
-}
-
-void Player::setyVel(float _yVel)
-{
-	yVel = _yVel;
 }
 
 void Player::Move()
@@ -82,7 +58,7 @@ void Player::Move()
 	ApplyGravity();
 
 	xVel = playerMoveSpeed;	
-=======
+
 	//Make sure the torch stays centered on our character
 	torch.SetPosition(bounds.pos + bounds.size/2);
 	//Make the torch face the direction of the cursor
@@ -101,14 +77,7 @@ void Player::Draw()
 	glDisable(GL_BLEND);
 }
 
-void Player::ApplyGravity()
-{
-	//Checks if the player is falling, if they are apply gravity.
-	if(!onSolidGround && !jumping)
-	{
-		bounds.pos.y += GRAVITY;
-	}
-}
+
 
 void Player::Jump()
 {
@@ -128,20 +97,3 @@ void Player::Jump()
 	}	
 }
 
-void Player::ObjectBelow()
-{
-	//Set onSolidGround to true since you have collided with an object below you.
-	onSolidGround = true;
-
-	//Set yVel to 0 so you stop falling
-	yVel = 0;
-}
-
-void Player::ObjectAbove()
-{
-	//Set onSolidGround to false since you cant be on solid ground if you've hit something above you.
-	onSolidGround = false;
-
-	//Set yVel to Gravity so that you begin to fall downwards.
-	yVel += GRAVITY;
-}

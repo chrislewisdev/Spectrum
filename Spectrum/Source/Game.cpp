@@ -1,6 +1,6 @@
 /*****************************************************************
 *Spectrum
-*Game.cpp by Chris Lewis
+*Game.cpp by Chris Lewis & Joe Park
 *****************************************************************/
 
 #include "Game.h"
@@ -42,12 +42,14 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
+	//Check for collesions between the player and the world
+	//Checking for collesions between moveable objects too be added
 	if(WorldCollisionBelow(player.GetBounds()))
 		player.ObjectBelow();
 	else if(WorldCollisionAbove(player.GetBounds()))
 		player.ObjectAbove();
 	else
-		player.setOnSolidGround(false);//Player falling
+		player.SetOnSolidGround(false);//Player falling
 	
 	//Check for Player movement inputs
 	player.Move();
