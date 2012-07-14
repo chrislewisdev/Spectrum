@@ -12,12 +12,16 @@
 #include <tinyxml.h>
 #include <string>
 #include "ColourBox.h"
+#include "Vector2D.h"
+#include "Box2D.h"
 
 using namespace std;
 using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
-	: GameState(_Owner, _Storage), player(Box2D(250,250,32,32))
+	: GameState(_Owner, _Storage),
+	player(Box2D(250,250,32,32)),
+	block(Box2D(100,100,32,32), COLOUR_RED,	Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))
 {
 	
 }
@@ -53,6 +57,7 @@ void Game::Update(float deltaTime)
 	
 	//Check for Player movement inputs
 	player.Move();
+	block.Move();
 
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
@@ -68,6 +73,7 @@ void Game::Update(float deltaTime)
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
+	block.Draw();
 }
 
 //State Exit function

@@ -8,6 +8,9 @@
 
 #include <GameState.h>
 #include "Player.h"
+#include "MovingColourBlocks.h"
+#include "Vector2D.h"
+#include "Box2D.h"
 
 class Game : public CEngine::GameState
 {
@@ -35,6 +38,8 @@ public:
 private:
 	//Creates the player
 	Player player;
+
+	MovingColourBlock block;
 };
 
 #endif
