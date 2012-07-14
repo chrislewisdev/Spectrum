@@ -63,5 +63,5 @@ void PhysicsObject::ObjectAbove()
 	onSolidGround = false;
 
 	//Set yVel to Gravity so that you begin to fall downwards.
-	yVel += GRAVITY;
+	yVel -= GRAVITY;
 }

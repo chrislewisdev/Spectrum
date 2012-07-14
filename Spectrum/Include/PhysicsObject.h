@@ -4,7 +4,9 @@
 #include <GameObject.h>
 #include "Box2D.h"
 
-class PhysicsObject: public CEngine::GameObject
+static const float GRAVITY = 8.0f;
+
+class PhysicsObject : public CEngine::GameObject
 {
 public:
 	PhysicsObject();

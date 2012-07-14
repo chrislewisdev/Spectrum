@@ -1,12 +1,13 @@
 /*****************************************************************
 *Spectrum
-*Player.cpp by Joe Park
+*Player.cpp by Joe Park & Chris Lewis
 *****************************************************************/
 #include "Player.h"
 #include <Windows.h>
 #include <gl/GL.h>
 #include <SDL.h>
 #include <ProgramControl.h>
+#include "Game.h"
 
 using namespace CEngine;
 
@@ -35,9 +36,9 @@ void Player::Move()
 	{
 		if(onSolidGround == true)
 		{
-			yVel += GRAVITY;
+			yVel += GRAVITY * 1.5f;
 			jumping = true;
-		}		
+		}
 	}
 	if (ProgramControl::ProgramInput.GetKey('a'))
 	{

@@ -7,6 +7,7 @@
 #include <gl/GL.h>
 #include <SDL.h>
 #include <ProgramControl.h>
+#include "PhysicsObject.h"
 
 MoveableBlock::MoveableBlock(CEngine::Box2D boundingBox)
 {
