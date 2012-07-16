@@ -10,7 +10,7 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 	: ColourBox(boundingBox, c)
 {
 	
-	path.resize(0);
+	path.resize(4);
 
 	//Add path points
 	path.push_back(pointA);
@@ -30,7 +30,7 @@ void MovingColourBlock::Move()
 {
 	//Check if during the last update the box reached a point.
 
-	if(CheckIfAtPoint())
+	if(!CheckIfAtPoint())
 	{
 		if		(path[nextPoint].x >= bounds.pos.x && path[nextPoint].y >= bounds.pos.y)
 		{
