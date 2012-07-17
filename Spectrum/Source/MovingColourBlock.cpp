@@ -13,10 +13,10 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 	path.resize(4);
 
 	//Add path points
-	path.push_back(pointA);
-	path.push_back(pointB);
-	path.push_back(pointC);
-	path.push_back(pointD);
+	path[0] = pointA;
+	path[1] = pointB;
+	path[2] = pointC;
+	path[3] = pointD;
 
 	//Set starting position
 	bounds.pos.x = pointA.x;
@@ -29,6 +29,7 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 void MovingColourBlock::Move()
 {
 	//Check if during the last update the box reached a point.
+	LimitNextPoint();
 
 	if(!CheckIfAtPoint())
 	{
@@ -43,6 +44,9 @@ void MovingColourBlock::Move()
 				bounds.pos.x += blockMoveSpeed;
 				bounds.pos.y += blockMoveSpeed;
 			}
+			if(CheckIfAtPoint())
+				nextPoint++;
+			LimitNextPoint();
 		}
 		else if(path[nextPoint].x >= bounds.pos.x && path[nextPoint].y <= bounds.pos.y)
 		{
@@ -55,6 +59,9 @@ void MovingColourBlock::Move()
 				bounds.pos.x += blockMoveSpeed;
 				bounds.pos.y -= blockMoveSpeed;
 			}
+			if(CheckIfAtPoint())
+				nextPoint++;
+			LimitNextPoint();
 		}
 		else if(path[nextPoint].x <= bounds.pos.x && path[nextPoint].y >= bounds.pos.y)
 		{
@@ -67,6 +74,9 @@ void MovingColourBlock::Move()
 				bounds.pos.x -= blockMoveSpeed;
 				bounds.pos.y += blockMoveSpeed;
 			}
+			if(CheckIfAtPoint())
+				nextPoint++;
+			LimitNextPoint();
 		}
 		else if(path[nextPoint].x <= bounds.pos.x && path[nextPoint].y <= bounds.pos.y)
 		{
@@ -79,16 +89,15 @@ void MovingColourBlock::Move()
 				bounds.pos.x -= blockMoveSpeed;
 				bounds.pos.y -= blockMoveSpeed;
 			}
+			if(CheckIfAtPoint())
+				nextPoint++;
+			LimitNextPoint();
 		}
 	}
 	else
 	{
 		nextPoint++;
-		if(nextPoint > 4)
-		{
-			//Loop completed returned to origin
-			nextPoint = 0;
-		}
+		LimitNextPoint();
 	}
 }
 
@@ -101,5 +110,13 @@ bool MovingColourBlock::CheckIfAtPoint()
 	else
 	{
 		return false;
+	}
+}
+
+void MovingColourBlock::LimitNextPoint()
+{
+	if(nextPoint > path.size()-1)
+	{
+		nextPoint = 0;
 	}
 }
