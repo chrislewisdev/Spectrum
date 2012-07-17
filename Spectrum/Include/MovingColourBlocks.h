@@ -25,6 +25,8 @@ private:
 
 	bool CheckIfAtPoint();
 
+	void LimitNextPoint();
+
 public:
 	MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 		CEngine::Vector2D pointA, CEngine::Vector2D pointB, CEngine::Vector2D pointC, CEngine::Vector2D pointD);
