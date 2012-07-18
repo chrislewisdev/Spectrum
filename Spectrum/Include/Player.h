@@ -25,7 +25,7 @@ public:
 	//Set methods
 	void SetJumping(bool _jumping);
 	
-
+	void ApplyGravity();
 	//Move the Player according to their keypress
 	void Move();
 

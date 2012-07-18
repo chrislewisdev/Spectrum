@@ -78,7 +78,14 @@ void Player::Draw()
 	glDisable(GL_BLEND);
 }
 
-
+void Player::ApplyGravity()
+{
+	//Checks if the player is falling, if they are apply gravity.
+	if(!onSolidGround && !jumping)
+	{
+		bounds.pos.y += GRAVITY;
+	}
+}
 
 void Player::Jump()
 {

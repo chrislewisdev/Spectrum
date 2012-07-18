@@ -23,7 +23,6 @@ CEngine::Box2D PhysicsObject::GetBounds() const
 	return bounds;
 }
 
-
 void PhysicsObject::SetOnSolidGround(bool _onSolidGround)
 {
 	onSolidGround = _onSolidGround;
