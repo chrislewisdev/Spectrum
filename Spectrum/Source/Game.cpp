@@ -20,7 +20,8 @@ using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
 	: GameState(_Owner, _Storage),
-	player(Box2D(250,250,32,32))
+	player(Box2D(250,250,32,32)),
+	sprite("robot.png")
 {
 	ColouredObject::SetTorch(player.GetTorch());
 }
@@ -74,6 +75,8 @@ void Game::Update(float deltaTime)
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
+
+	sprite.Draw(Box2D(0, 0, 32, 32));
 }
 
 //State Exit function

@@ -11,6 +11,7 @@
 #include "MovingColourBlocks.h"
 #include "Vector2D.h"
 #include "Box2D.h"
+#include "Sprite.h"
 
 class Game : public CEngine::GameState
 {
@@ -38,6 +39,8 @@ public:
 private:
 	//Creates the player
 	Player player;
+	//Temp sprite
+	Sprite sprite;
 };
 
 #endif

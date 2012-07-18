@@ -10,6 +10,9 @@
 #include "ColourBox.h"
 #include <Windows.h>
 #include <gl/GL.h>
+#include <il/il.h>
+#include <il/ilu.h>
+#include <il/ilut.h>
 
 using namespace CEngine;
 
@@ -18,6 +21,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//Create our Game Control and Window
 	ProgramControl Control("Spectrum", 800, 600);
 	GameData& Objects = *Control.GetGameData();
+
+	//Initialise DevIL
+	ilInit();
+	iluInit();
+	ilutRenderer(ILUT_OPENGL);
+	glEnable(GL_TEXTURE_2D);
 
 	//Set up alpa-blending
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
