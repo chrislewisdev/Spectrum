@@ -23,6 +23,11 @@ public:
 	void Draw();
 	//GameObject Clone function
 	CEngine::GameObject *Clone() const;
+
+private:
+	//Declare private properties
+	//Colour values for this box
+	float r, g, b;
 };
 
 #endif

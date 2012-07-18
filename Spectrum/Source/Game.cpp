@@ -23,7 +23,7 @@ Game::Game(StateMachine *_Owner, GameData *_Storage)
 	player(Box2D(250,250,32,32)),
 	block(Box2D(100,100,32,32), COLOUR_RED,	Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))
 {
-	
+	ColouredObject::SetTorch(player.GetTorch());
 }
 
 //State Enter function

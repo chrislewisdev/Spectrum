@@ -98,3 +98,8 @@ void Player::Jump()
 	}	
 }
 
+//This function returns a const pointer to the Player's torch
+const Torch *Player::GetTorch() const
+{
+	return &torch;
+}

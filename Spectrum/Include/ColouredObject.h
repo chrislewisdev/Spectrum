@@ -8,6 +8,7 @@
 
 #include <GameObject.h>
 #include "ColourType.h"
+#include "Torch.h"
 
 class ColouredObject : public CEngine::GameObject
 {
@@ -18,6 +19,8 @@ public:
 	//Declare public functions
 	//Sets the current colour selected by the game
 	static void SetCurrentColour(ColourType c);
+	//Sets the current player torch to use
+	static void SetTorch(const Torch *t);
 	//Retrieves the current colour selected by the game
 	static ColourType CurrentColour();
 	//Returns the colour in use by this object
@@ -27,6 +30,8 @@ protected:
 	//Declare protected properties
 	//Specifier for what our colour type is
 	ColourType colour;
+	//Const pointer to a torch to use for the player's torch
+	static const Torch *PlayerTorch;
 
 private:
 	//Declare private properties

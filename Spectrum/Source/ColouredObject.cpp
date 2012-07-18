@@ -7,8 +7,9 @@
 
 using namespace CEngine;
 
-//Define our static currentColour variable
+//Define our static currentColour variable and player torch
 ColourType ColouredObject::currentColour = COLOUR_NONE;
+const Torch *ColouredObject::PlayerTorch = NULL;
 
 ColouredObject::ColouredObject(ColourType c)
 	: colour(c)
@@ -26,6 +27,12 @@ ColouredObject::ColouredObject(Box2D boundingBox, ColourType c)
 void ColouredObject::SetCurrentColour(ColourType c)
 {
 	currentColour = c;
+}
+
+//This function sets the torch to use in checking for visibility
+void ColouredObject::SetTorch(const Torch *t)
+{
+	PlayerTorch = t;
 }
 
 //This function returns the current colour selected by the game

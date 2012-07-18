@@ -1,6 +1,6 @@
 /*****************************************************************
 *Spectrum
-*Player.h by Joe Park
+*Player.h by Joe Park & Chris Lewis
 *****************************************************************/
 #ifndef Player_H
 #define Player_H
@@ -34,6 +34,9 @@ public:
 
 	//Perform the jump action, spends 5 frames going upwards.
 	void Jump();
+
+	//This function returns a const pointer to the player's torch
+	const Torch *GetTorch() const;
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;

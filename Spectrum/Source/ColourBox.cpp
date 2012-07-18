@@ -12,7 +12,22 @@ using namespace CEngine;
 ColourBox::ColourBox(Box2D boundingBox, ColourType c)
 	: ColouredObject(boundingBox, c)
 {
-
+	if (colour == COLOUR_RED)
+	{
+		r = 1.0f; g = 0.0f; b = 0.0f;
+	}
+	else if (colour == COLOUR_BLUE)
+	{
+		r = 0.0f; g = 0.0f; b = 1.0f;
+	}
+	else if (colour == COLOUR_YELLOW)
+	{
+		r = 1.0f; g = 1.0f; b = 0.0f;
+	}
+	else if (colour == COLOUR_WHITE)
+	{
+		r = 1.0f; g = 1.0f; b = 1.0f;
+	}
 }
 
 ColourBox::ColourBox(TiXmlElement *Object, ColourType c)
@@ -40,15 +55,20 @@ void ColourBox::Update(float deltaTime)
 void ColourBox::Draw()
 {
 	//Only draw this block if we have the current selected colour
+	glEnable(GL_BLEND);
 	if (colour == CurrentColour() || colour == COLOUR_WHITE)
 	{
-		if (colour == COLOUR_RED) glColor3f(1.0f, 0.0f, 0.0f);
-		else if (colour == COLOUR_BLUE) glColor3f(0.0f, 0.0f, 1.0f);
-		else if (colour == COLOUR_YELLOW) glColor3f(1.0f, 1.0f, 0.0f);
-		else if (colour == COLOUR_WHITE) glColor3f(1.0f, 1.0f, 1.0f);
+		glColor4f(r, g, b, 1.0f);
 
 		DrawBoundingBox();
 	}
+	else if (PlayerTorch->Overlap(bounds))
+	{
+		glColor4f(r, g, b, 0.25f);
+
+		DrawBoundingBox();
+	}
+	glDisable(GL_BLEND);
 }
 
 //Clone function
