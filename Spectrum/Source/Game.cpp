@@ -20,8 +20,7 @@ using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
 	: GameState(_Owner, _Storage),
-	player(Box2D(250,250,32,32)),
-	block(Box2D(100,100,32,32), COLOUR_RED,	Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))
+	player(Box2D(250,250,32,32))
 {
 	ColouredObject::SetTorch(player.GetTorch());
 }
@@ -33,6 +32,9 @@ void Game::Enter()
 	
 	//Load up our test map
 	LoadMap("test_map.tmx");
+
+	//Add that temp moving colour block
+	GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
 }
 
 //State Update function
@@ -57,7 +59,6 @@ void Game::Update(float deltaTime)
 	
 	//Check for Player movement inputs
 	player.Move();
-	block.Move();
 
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
@@ -73,7 +74,6 @@ void Game::Update(float deltaTime)
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
-	block.Draw();
 }
 
 //State Exit function

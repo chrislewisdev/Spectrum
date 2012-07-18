@@ -1,6 +1,6 @@
 /*****************************************************************
 *Spectrum
-*MovingColourBlock.cpp by Joe Park
+*MovingColourBlock.cpp by Joe Park & Chris Lewis
 *****************************************************************/
 #include "MovingColourBlocks.h"
 #include <assert.h>
@@ -24,6 +24,12 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 
 	//Set next point to 1
 	nextPoint = 1;
+}
+
+//This function performs our GameObject Update, so it'll work when used in generic GameStorage
+void MovingColourBlock::Update(float deltaTime)
+{
+	Move();
 }
 
 void MovingColourBlock::Move()

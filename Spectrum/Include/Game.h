@@ -38,8 +38,6 @@ public:
 private:
 	//Creates the player
 	Player player;
-
-	MovingColourBlock block;
 };
 
 #endif

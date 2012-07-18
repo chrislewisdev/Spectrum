@@ -1,6 +1,6 @@
 /*****************************************************************
 *Spectrum
-*MovingColourBlock.h by Joe Park
+*MovingColourBlock.h by Joe Park & Chris Lewis
 *****************************************************************/
 
 #ifndef MovingColourBlock_H
@@ -22,6 +22,9 @@ private:
 
 	//Number representing the next point along the path
 	int nextPoint;
+
+	//GameObject Update function- just calls Move()
+	void Update(float deltaTime);
 
 	bool CheckIfAtPoint();
 
