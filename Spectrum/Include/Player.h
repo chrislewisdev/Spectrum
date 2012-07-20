@@ -22,8 +22,7 @@ public:
 	//Destructor
 	~Player();	
 
-	//Set methods
-	void SetJumping(bool _jumping);
+	bool GetJumping() const;
 	
 	void ApplyGravity();
 	//Move the Player according to their keypress
@@ -34,6 +33,8 @@ public:
 
 	//Perform the jump action, spends 5 frames going upwards.
 	void Jump();
+
+	void ObjectAbove();
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;

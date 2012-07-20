@@ -21,6 +21,7 @@ Player::Player(Box2D _boundingBox)
 {	
 	jumping = false;
 	frameCount = 0;
+	hittingObject = false;
 }
 
 Player::~Player()
@@ -28,24 +29,29 @@ Player::~Player()
 
 }
 
+bool Player::GetJumping() const
+{
+	return jumping;
+}
+
 void Player::Move()
-{	
+{
+	xVel = 0;
 	//Check for vertical movement
 	if (ProgramControl::ProgramInput.GetKey('w'))
 	{
 		if(onSolidGround == true)
 		{
-			yVel += GRAVITY;
 			jumping = true;
 		}		
 	}
-	if (ProgramControl::ProgramInput.GetKey('a'))
+	if (ProgramControl::ProgramInput.GetKey('a') && !hittingObject)
 	{
-		bounds.pos.x -= xVel;		
+		xVel = -playerMoveSpeed;		
 	}
-	if (ProgramControl::ProgramInput.GetKey('d'))
+	if (ProgramControl::ProgramInput.GetKey('d') && !hittingObject)
 	{
-		bounds.pos.x += xVel;		
+		xVel = playerMoveSpeed;			
 	}
 
 	//If jumping has been set to true call jump
@@ -55,9 +61,10 @@ void Player::Move()
 	}
 
 	//Apply gravity to the player every update.	
-	ApplyGravity();
+	ApplyGravity();	
 
-	xVel = playerMoveSpeed;	
+	bounds.pos.x += xVel;
+	bounds.pos.y += yVel;
 
 	//Make sure the torch stays centered on our character
 	torch.SetPosition(bounds.pos + bounds.size/2);
@@ -82,7 +89,7 @@ void Player::ApplyGravity()
 	//Checks if the player is falling, if they are apply gravity.
 	if(!onSolidGround && !jumping)
 	{
-		bounds.pos.y += GRAVITY;
+		yVel = GRAVITY;
 	}
 }
 
@@ -90,9 +97,9 @@ void Player::Jump()
 {
 	frameCount++;
 	//Checks that the allowed amount of frames has passed before you begin to fall.
-	if(frameCount <= 15)
+	if(frameCount <= 24)
 	{		
-		bounds.pos.y -= yVel;
+		yVel = -GRAVITY/2;
 		jumping = true;
 	}
 	else
@@ -103,4 +110,18 @@ void Player::Jump()
 		jumping = false;
 	}	
 }
+
+void Player::ObjectAbove()
+{
+	//Set onSolidGround to false since you cant be on solid ground if you've hit something above you.
+	onSolidGround = false;
+
+	//Set yVel to Gravity so that you begin to fall downwards.
+	yVel = 0;
+
+	//Player is no longer jumping set jumping to false.
+	jumping = false;
+	frameCount = 0;
+}
+
 
