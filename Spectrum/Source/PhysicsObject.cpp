@@ -1,5 +1,5 @@
 #include "PhysicsObject.h"
-
+using namespace CEngine;
 PhysicsObject::PhysicsObject()
 {
 
@@ -23,19 +23,32 @@ CEngine::Box2D PhysicsObject::GetBounds() const
 	return bounds;
 }
 
+bool PhysicsObject::GetOnSolidGround() const
+{
+	return onSolidGround;
+}
+
 void PhysicsObject::SetOnSolidGround(bool _onSolidGround)
 {
 	onSolidGround = _onSolidGround;
 }
 
-void PhysicsObject::SetXVel(float _xVel)
+void PhysicsObject::SetHittingObject(bool _hittingObject)
 {
-	xVel = _xVel;
+	hittingObject = _hittingObject;
 }
 
-void PhysicsObject::SetYVel(float _yVel)
+void PhysicsObject::IncreaseYPos(float y)
 {
-	yVel = _yVel;
+	bounds.pos.y += y;
+}
+
+void PhysicsObject::AdjustPosition(Box2D object)
+{
+	if(object.pos.y > bounds.pos.y)
+	{
+		bounds.pos.y--;
+	}
 }
 
 void PhysicsObject::ApplyGravity()
@@ -62,5 +75,17 @@ void PhysicsObject::ObjectAbove()
 	onSolidGround = false;
 
 	//Set yVel to Gravity so that you begin to fall downwards.
-	yVel -= GRAVITY;
+	yVel = 0;
+}
+
+void PhysicsObject::ObjectLeft()
+{
+	hittingObject = true;
+	bounds.pos.x -= 8.0;
+}
+
+void PhysicsObject::ObjectRight()
+{
+	hittingObject = true;
+	bounds.pos.x += 8.0;
 }

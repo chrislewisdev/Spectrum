@@ -22,8 +22,7 @@ public:
 	//Destructor
 	~Player();	
 
-	//Set methods
-	void SetJumping(bool _jumping);
+	bool GetJumping() const;
 	
 	void ApplyGravity();
 	//Move the Player according to their keypress
@@ -37,6 +36,8 @@ public:
 
 	//This function returns a const pointer to the player's torch
 	const Torch *GetTorch() const;
+	
+	void ObjectAbove();
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;
