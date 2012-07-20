@@ -73,7 +73,7 @@ void Game::Update(float deltaTime)
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
 		int count = 0;
-		while ((*cdtr)->BoundingBox().Overlap(player.GetBounds()))
+		while ((*cdtr)->CheckCollision(player.GetBounds()))
 		{
 			player.AdjustPosition(((*cdtr)->BoundingBox()));
 			count++;
@@ -118,7 +118,7 @@ bool Game::WorldCollision(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->BoundingBox().Overlap(target)) return true;
+		if ((*cdtr)->CheckCollision(target)) return true;
 	}
 	return false;
 }
@@ -128,7 +128,7 @@ bool Game::WorldCollisionBelow(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->BoundingBox().Overlap(target) && //The target is overlapping against any object in the world
+		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.y <= (*cdtr)->BoundingBox().pos.y)//And the target is above the object
 		{
 			return true;
@@ -142,7 +142,7 @@ bool Game::WorldCollisionAbove(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->BoundingBox().Overlap(target) && //The target is overlapping against any object in the world
+		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.y >= (*cdtr)->BoundingBox().pos.y)//And the target is below the object
 		{
 			return true;
@@ -156,7 +156,7 @@ bool Game::WorldCollisionLeft(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->BoundingBox().Overlap(target) && //The target is overlapping against any object in the world
+		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.x <= (*cdtr)->BoundingBox().pos.x)//And the target is below the object
 		{
 			return true;
@@ -170,7 +170,7 @@ bool Game::WorldCollisionRight(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->BoundingBox().Overlap(target) && //The target is overlapping against any object in the world
+		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.x >= (*cdtr)->BoundingBox().pos.x)//And the target is below the object
 		{
 			return true;

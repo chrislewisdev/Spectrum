@@ -23,6 +23,8 @@ public:
 	void Draw();
 	//GameObject Clone function
 	CEngine::GameObject *Clone() const;
+	//Collision function for boxes- namely, the player (we want to make sure it takes current colour into account)
+	bool CheckCollision(const CEngine::Box2D& target);
 
 private:
 	//Declare private properties

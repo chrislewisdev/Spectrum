@@ -76,3 +76,9 @@ GameObject *ColourBox::Clone() const
 {
 	return new ColourBox(*this);
 }
+
+//This function checks for collision against a box whilst taking colour into account
+bool ColourBox::CheckCollision(const Box2D& target)
+{
+	return (bounds.Overlap(target) && (colour == CurrentColour() || colour == COLOUR_WHITE));
+}
