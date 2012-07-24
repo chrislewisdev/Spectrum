@@ -21,7 +21,13 @@ private:
 	std::vector<CEngine::Vector2D> path;
 
 	//Number representing the next point along the path
-	int nextPoint;
+	int nextPoint;	
+
+	enum horizontalDirection {Left, Right, Not};
+	enum verticalDirection {Up, Down, None};
+	//Returns true for horizontal, false for vertical.
+	horizontalDirection CheckHorizontalDirection();
+	verticalDirection CheckVerticalDirection();
 
 	//GameObject Update function- just calls Move()
 	void Update(float deltaTime);
@@ -30,13 +36,17 @@ private:
 
 	void LimitNextPoint();
 
-public:
+public:	
+
 	MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 		CEngine::Vector2D pointA, CEngine::Vector2D pointB, CEngine::Vector2D pointC, CEngine::Vector2D pointD);
 
 	//Yes this function looks horrible :D
 	//I am going to come back through and tidy it up.
 	void Move();
+
+	//Function that is called if the player touches the object.
+	void CheckCollision(CEngine::Box2D target);
 };
 
 #endif

@@ -23,6 +23,10 @@ public:
 	~Player();	
 
 	bool GetJumping() const;
+
+	bool GetStanding() const;
+
+	void SetStanding(bool _standing);
 	
 	void ApplyGravity();
 	//Move the Player according to their keypress
@@ -38,6 +42,12 @@ public:
 	const Torch *GetTorch() const;
 	
 	void ObjectAbove();
+
+	//The function that handles a collision with an object below you
+	void ObjectLeft();
+
+	//The function that handles a collision with an object above you
+	void ObjectRight();
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;
@@ -47,6 +57,9 @@ private:
 
 	//The Player's Torch!
 	Torch torch;
+
+	//Extra variable to track if the player is standing on the ground but not overlapping with the ground.
+	bool standing;
 };
 
 #endif

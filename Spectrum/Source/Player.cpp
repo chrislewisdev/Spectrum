@@ -23,6 +23,7 @@ Player::Player(Box2D _boundingBox)
 	jumping = false;
 	frameCount = 0;
 	hittingObject = false;
+	standing = false;
 }
 
 Player::~Player()
@@ -33,6 +34,16 @@ Player::~Player()
 bool Player::GetJumping() const
 {
 	return jumping;
+}
+
+bool Player::GetStanding() const
+{
+	return standing;
+}
+
+void Player::SetStanding(bool _standing)
+{
+	standing = _standing;
 }
 
 void Player::Move()
@@ -131,4 +142,15 @@ void Player::ObjectAbove()
 	frameCount = 0;
 }
 
+void Player::ObjectLeft()
+{
+	hittingObject = true;
+	bounds.pos.x -= 8.0;
+}
+
+void Player::ObjectRight()
+{
+	hittingObject = true;
+	bounds.pos.x += 8.0;
+}
 

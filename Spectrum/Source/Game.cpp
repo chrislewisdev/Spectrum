@@ -53,11 +53,12 @@ void Game::Update(float deltaTime)
 	//Checking for collesions between moveable objects too be added
 	if(WorldCollisionAbove(player.GetBounds()) && !player.GetOnSolidGround())
 		player.ObjectAbove();
-	else if(WorldCollisionBelow(player.GetBounds()))
+	else if(WorldCollisionBelow(player.GetBounds()) || player.GetStanding())
 		player.ObjectBelow();
 	else//falling
 		player.SetOnSolidGround(false);
 
+	//Check for collesions between the player and the world
 	if(WorldCollisionLeft(player.GetBounds()))
 		player.ObjectLeft();
 	else if(WorldCollisionRight(player.GetBounds()))
@@ -67,21 +68,31 @@ void Game::Update(float deltaTime)
 
 	//Check for Player movement inputs
 	player.Move();
+	
+	//Set player to not standing by default.
+	player.SetStanding(false);
 
-
-	//Adjust the players position
+	//Adjust the players position so they no longer overlap with an object below them.
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
 		int count = 0;
 		while ((*cdtr)->CheckCollision(player.GetBounds()))
 		{
-			player.AdjustPosition(((*cdtr)->BoundingBox()));
+			//Adjusts the players y value till it is no longer overlapping with the block. This allows us to test for
+			//collisions in the horizontal domain without interference.
+			player.AdjustPosition((*cdtr)->BoundingBox());
+
+			//Since we have adjusted the players position this means that they are standing with an object below them
+			//Set standing to true so that we can use that instead of checking for a collesion since this no longer works
+			//Because the player isn't overlapping with the block.
+			player.SetStanding(true);
+			
+			//Prevents an infinite loop.
 			count++;
 			if(count >= 10)
 				break;
 		}
 	}
-
 
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
@@ -141,7 +152,7 @@ bool Game::WorldCollisionBelow(Box2D target)
 bool Game::WorldCollisionAbove(Box2D target)
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
-	{
+	{ 
 		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.y >= (*cdtr)->BoundingBox().pos.y)//And the target is below the object
 		{
