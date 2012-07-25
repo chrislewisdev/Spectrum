@@ -33,6 +33,23 @@ ColourBox::ColourBox(Box2D boundingBox, ColourType c)
 ColourBox::ColourBox(TiXmlElement *Object, ColourType c)
 	: ColouredObject(c)
 {
+	if (colour == COLOUR_RED)
+	{
+		r = 1.0f; g = 0.0f; b = 0.0f;
+	}
+	else if (colour == COLOUR_BLUE)
+	{
+		r = 0.0f; g = 0.0f; b = 1.0f;
+	}
+	else if (colour == COLOUR_YELLOW)
+	{
+		r = 1.0f; g = 1.0f; b = 0.0f;
+	}
+	else if (colour == COLOUR_WHITE)
+	{
+		r = 1.0f; g = 1.0f; b = 1.0f;
+	}
+
 	//Temp storage for queried XML attribute values
 	//Tiled stores all its co-ordinates as int so we use that even though our position data is stored as a float
 	int tempValue;

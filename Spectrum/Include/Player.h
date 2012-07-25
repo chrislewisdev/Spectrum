@@ -8,6 +8,7 @@
 #include "PhysicsObject.h"
 #include "Box2D.h"
 #include "Torch.h"
+#include <tinyxml.h>
 
 //Player Move Speed
 const float playerMoveSpeed = 4.0;
@@ -40,6 +41,9 @@ public:
 
 	//This function returns a const pointer to the player's torch
 	const Torch *GetTorch() const;
+
+	//This function updates our torch's position
+	void UpdateTorch();
 	
 	void ObjectAbove();
 
@@ -48,6 +52,9 @@ public:
 
 	//The function that handles a collision with an object above you
 	void ObjectRight();
+
+	//Function to read the player's position from Tiled XML data.
+	void ReadPosition(TiXmlElement *Object);
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;

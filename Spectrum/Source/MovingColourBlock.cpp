@@ -4,7 +4,11 @@
 *****************************************************************/
 #include "MovingColourBlocks.h"
 #include <assert.h>
+#include <string>
+
+using namespace std;
 using namespace CEngine;
+
 MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 	Vector2D pointA, Vector2D pointB, Vector2D pointC, Vector2D pointD)
 	: ColourBox(boundingBox, c)
@@ -23,6 +27,36 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 	bounds.pos.y = pointA.y;
 
 	//Set next point to 1
+	nextPoint = 1;
+}
+
+MovingColourBlock::MovingColourBlock(TiXmlElement *Object, ColourType c)
+	: ColourBox(Object, c)
+{
+	path.resize(4);
+
+	TiXmlElement *Property = Object->FirstChildElement("properties")->FirstChildElement("property");
+
+	while (Property)
+	{
+		string name(Property->Attribute("name"));
+		int tempValue;
+
+		Property->QueryIntAttribute("value", &tempValue);
+
+		if (name == "x1") path[0].x = (float)tempValue;
+		else if (name == "x2") path[1].x = (float)tempValue;
+		else if (name == "x3") path[2].x = (float)tempValue;
+		else if (name == "x4") path[3].x = (float)tempValue;
+		else if (name == "y1") path[0].y = (float)tempValue;
+		else if (name == "y2") path[1].y = (float)tempValue;
+		else if (name == "y3") path[2].y = (float)tempValue;
+		else if (name == "y4") path[3].y = (float)tempValue;
+
+		Property = Property->NextSiblingElement();
+	}
+
+	bounds.pos = path[0];
 	nextPoint = 1;
 }
 

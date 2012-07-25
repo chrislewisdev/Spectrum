@@ -77,7 +77,11 @@ void Player::Move()
 
 	bounds.pos.x += xVel;
 	bounds.pos.y += yVel;
+}
 
+//This function updates the torch's position
+void Player::UpdateTorch()
+{
 	//Make sure the torch stays centered on our character
 	torch.SetPosition(bounds.pos + bounds.size/2);
 	//Make the torch face the direction of the cursor
@@ -154,3 +158,11 @@ void Player::ObjectRight()
 	bounds.pos.x += 8.0;
 }
 
+//This function loads the player's position from Tiled XML
+void Player::ReadPosition(TiXmlElement *Object)
+{
+	int tempValue;
+
+	Object->QueryIntAttribute("x", &tempValue); bounds.pos.x = tempValue;
+	Object->QueryIntAttribute("y", &tempValue); bounds.pos.y = tempValue;
+}

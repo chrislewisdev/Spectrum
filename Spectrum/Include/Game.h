@@ -46,8 +46,6 @@ public:
 private:
 	//Creates the player
 	Player player;
-	//Temp sprite
-	Sprite sprite;
 };
 
 #endif

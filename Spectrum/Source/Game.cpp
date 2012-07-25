@@ -20,8 +20,7 @@ using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
 	: GameState(_Owner, _Storage),
-	player(Box2D(250,250,32,32)),
-	sprite("robot.png")
+	player(Box2D(250,250,32,32))
 {
 	ColouredObject::SetTorch(player.GetTorch());
 }
@@ -35,7 +34,7 @@ void Game::Enter()
 	LoadMap("test_map.tmx");
 
 	//Add that temp moving colour block
-	GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
+	//GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
 }
 
 //State Update function
@@ -94,6 +93,8 @@ void Game::Update(float deltaTime)
 		}
 	}
 
+	player.UpdateTorch();
+
 	//Update all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
@@ -108,8 +109,6 @@ void Game::Update(float deltaTime)
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
-
-	sprite.Draw(Box2D(0, 0, 32, 32));
 }
 
 //State Exit function
@@ -210,26 +209,49 @@ void Game::LoadMap(string filename)
 			TiXmlElement *Object = Layer->FirstChildElement();
 			//Get the name of our layer
 			string name(Layer->Attribute("name"));
+			ColourType colour;
 
 			//Loop through all objects
 			while (Object)
 			{
+				string type(Object->Attribute("type") != NULL ? Object->Attribute("type") : "");
+
 				//Depending on the type of this layer, spawn a certain type of object
 				if (name == "red")
 				{
-					GameStorage->AddObject(GameObjectPointer(new ColourBox(Object, COLOUR_RED)));
+					colour = COLOUR_RED;
 				}
 				else if (name == "blue")
 				{
-					GameStorage->AddObject(GameObjectPointer(new ColourBox(Object, COLOUR_BLUE)));
+					colour = COLOUR_BLUE;
 				}
 				else if (name == "yellow")
 				{
-					GameStorage->AddObject(GameObjectPointer(new ColourBox(Object, COLOUR_YELLOW)));
+					colour = COLOUR_YELLOW;
 				}
 				else if (name == "white")
 				{
-					GameStorage->AddObject(GameObjectPointer(new ColourBox(Object, COLOUR_WHITE)));
+					colour = COLOUR_WHITE;
+				}
+				else if (name == "player")
+				{
+					player.ReadPosition(Object);
+				}
+
+				if (name != "player")
+				{
+					if (type == "" || type == "normal")
+					{
+						GameStorage->AddObject(GameObjectPointer(new ColourBox(Object, colour)));
+					}
+					else if (type == "moveable")
+					{
+
+					}
+					else if (type == "moving")
+					{
+						GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Object, colour)));
+					}
 				}
 
 				Object = Object->NextSiblingElement();
