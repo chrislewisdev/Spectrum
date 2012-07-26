@@ -49,6 +49,10 @@ void PhysicsObject::AdjustPosition(Box2D object)
 	{
 		bounds.pos.y--;
 	}
+	else if(object.pos.y < bounds.pos.y)
+	{
+		bounds.pos.y++;
+	}
 }
 
 void PhysicsObject::ApplyGravity()
