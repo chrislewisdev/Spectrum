@@ -48,7 +48,7 @@ public:
 	void Move();
 
 	//Function that is called if the player touches the object.
-	void CheckCollision(CEngine::Box2D target);
+	void Collision(CEngine::Box2D target);
 };
 
 #endif

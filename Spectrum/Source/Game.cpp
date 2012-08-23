@@ -14,6 +14,7 @@
 #include "ColourBox.h"
 #include "Vector2D.h"
 #include "Box2D.h"
+#include "MoveableBlock.h"
 
 using namespace std;
 using namespace CEngine;
@@ -34,7 +35,11 @@ void Game::Enter()
 	LoadMap("test_map.tmx");
 
 	//Add that temp moving colour block
-	//GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
+	//GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(32,32), Vector2D(32,64), Vector2D(64,64), Vector2D(64,32))));
+	GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32),
+		COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
+
+	//GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(300,100,32,32))));
 }
 
 //State Update function
@@ -141,6 +146,7 @@ bool Game::WorldCollisionBelow(Box2D target)
 		if ((*cdtr)->CheckCollision(target) && //The target is overlapping against any object in the world
 			target.pos.y <= (*cdtr)->BoundingBox().pos.y)//And the target is above the object
 		{
+
 			return true;
 		}
 	}

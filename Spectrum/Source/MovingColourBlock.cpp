@@ -189,7 +189,7 @@ void MovingColourBlock::LimitNextPoint()
 	}
 }
 
-void MovingColourBlock::CheckCollision(CEngine::Box2D target)
+void MovingColourBlock::Collision(CEngine::Box2D target)
 {
 	if(CheckHorizontalDirection() == MovingColourBlock::Left)
 	{
