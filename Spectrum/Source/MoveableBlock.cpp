@@ -15,7 +15,7 @@ MoveableBlock::MoveableBlock(CEngine::Box2D boundingBox)
 	onSolidGround = false;
 }
 
-void MoveableBlock::Push(float playerXPos, float playerXVel)
+void MoveableBlock::Collision(float playerXPos, float playerXVel)
 {
 	if(playerXPos >= bounds.pos.x)
 	{
@@ -24,18 +24,6 @@ void MoveableBlock::Push(float playerXPos, float playerXVel)
 	else if(playerXPos <= bounds.pos.x)
 	{
 		bounds.pos.x += playerXVel;
-	}
-}
-
-void MoveableBlock::Pull(float playerXPos, float playerXVel)
-{
-	if(playerXPos >= bounds.pos.x)
-	{
-		bounds.pos.x += playerXVel;
-	}
-	else if(playerXPos <= bounds.pos.x)
-	{
-		bounds.pos.x -= playerXVel;
 	}
 }
 

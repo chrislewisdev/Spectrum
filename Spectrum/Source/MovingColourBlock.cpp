@@ -3,6 +3,7 @@
 *MovingColourBlock.cpp by Joe Park & Chris Lewis
 *****************************************************************/
 #include "MovingColourBlocks.h"
+#include <ProgramControl.h>
 #include <assert.h>
 #include <string>
 
@@ -189,23 +190,45 @@ void MovingColourBlock::LimitNextPoint()
 	}
 }
 
+bool MovingColourBlock::CheckIfMovementKeyIsDown()
+{
+	if (ProgramControl::ProgramInput.GetKey('w'))
+		return true;
+	if (ProgramControl::ProgramInput.GetKey('a'))
+		return true;
+	if (ProgramControl::ProgramInput.GetKey('d'))
+		return true;
+}
+
 void MovingColourBlock::Collision(CEngine::Box2D target)
 {
-	if(CheckHorizontalDirection() == MovingColourBlock::Left)
+	if(playerAttached)
 	{
-		target.pos.x -= 4.0;
-	}
-	else if(CheckHorizontalDirection() == MovingColourBlock::Right)
-	{
-		target.pos.x -= 4.0;
-	}
+		if(CheckIfMovementKeyIsDown())
+		{
+			playerAttached = false;
+		}
+		else
+		{	
+			playerAttached = true;
 
-	if(CheckVerticalDirection() == 	MovingColourBlock::Up)
-	{
-		target.pos.y -= 4.0;
-	}
-	else if(CheckVerticalDirection() == MovingColourBlock::Down)
-	{
-		target.pos.y += 4.0;
+			if(CheckHorizontalDirection() == MovingColourBlock::Left)
+			{
+				target.pos.x -= 4.0;
+			}
+			else if(CheckHorizontalDirection() == MovingColourBlock::Right)
+			{
+				target.pos.x -= 4.0;
+			}
+
+			if(CheckVerticalDirection() == 	MovingColourBlock::Up)
+			{
+				target.pos.y -= 4.0;
+			}
+			else if(CheckVerticalDirection() == MovingColourBlock::Down)
+			{
+				target.pos.y += 4.0;
+			}
+		}
 	}
 }

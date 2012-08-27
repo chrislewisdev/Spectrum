@@ -92,7 +92,7 @@ void Player::UpdateTorch()
 void Player::Draw()
 {
 	//Draw our player-position point
-	glColor3f(.5f, 0, 0);
+	glColor3f(1,1,1);
 	DrawBoundingBox();
 	glEnable(GL_BLEND);
 	glColor4f(0.7f, 0.7f, 0.7f, 0.5f);

@@ -11,7 +11,7 @@
 #include <Vector2D.h>
 #include <vector>
 
-const float blockMoveSpeed = 4.0;
+const float blockMoveSpeed = 2.0;
 
 class MovingColourBlock: public ColourBox
 {
@@ -36,6 +36,10 @@ private:
 
 	void LimitNextPoint();
 
+	bool CheckIfMovementKeyIsDown();
+
+	bool playerAttached;
+
 public:	
 
 	MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
@@ -46,9 +50,9 @@ public:
 	//Yes this function looks horrible :D
 	//I am going to come back through and tidy it up.
 	void Move();
-
-	//Function that is called if the player touches the object.
-	void Collision(CEngine::Box2D target);
+	
+	//Inherited Function that controls what happens when the player collides with the block.
+	void Collision(CEngine::Box2D target);	
 };
 
 #endif

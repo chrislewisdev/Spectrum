@@ -76,27 +76,7 @@ void Game::Update(float deltaTime)
 	//Set player to not standing by default.
 	player.SetStanding(false);
 
-	//Adjust the players position so they no longer overlap with an object below them.
-	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
-	{
-		int count = 0;
-		while ((*cdtr)->CheckCollision(player.GetBounds()))
-		{
-			//Adjusts the players y value till it is no longer overlapping with the block. This allows us to test for
-			//collisions in the horizontal domain without interference.
-			player.AdjustPosition((*cdtr)->BoundingBox());
-
-			//Since we have adjusted the players position this means that they are standing with an object below them
-			//Set standing to true so that we can use that instead of checking for a collesion since this no longer works
-			//Because the player isn't overlapping with the block.
-			player.SetStanding(true);
-			
-			//Prevents an infinite loop.
-			count++;
-			if(count >= 10)
-				break;
-		}
-	}
+	RemoveObjectOverlap();
 
 	player.UpdateTorch();
 
@@ -265,5 +245,30 @@ void Game::LoadMap(string filename)
 		}
 
 		Layer = Layer->NextSiblingElement();
+	}
+}
+
+void Game::RemoveObjectOverlap()
+{		
+	//Adjust the players position so they no longer overlap with an object below them.
+	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
+	{
+		int count = 0;
+		while ((*cdtr)->CheckCollision(player.GetBounds()))
+		{
+			//Adjusts the players y value till it is no longer overlapping with the block. This allows us to test for
+			//collisions in the horizontal domain without interference.
+			player.AdjustPosition((*cdtr)->BoundingBox());
+
+			//Since we have adjusted the players position this means that they are standing with an object below them
+			//Set standing to true so that we can use that instead of checking for a collesion since this no longer works
+			//Because the player isn't overlapping with the block.
+			player.SetStanding(true);
+			
+			//Prevents an infinite loop.
+			count++;
+			if(count >= 10)
+				break;
+		}
 	}
 }

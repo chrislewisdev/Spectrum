@@ -46,6 +46,8 @@ public:
 private:
 	//Creates the player
 	Player player;
+
+	void RemoveObjectOverlap();
 };
 
 #endif

@@ -67,6 +67,8 @@ private:
 
 	//Extra variable to track if the player is standing on the ground but not overlapping with the ground.
 	bool standing;
+
+	
 };
 
 #endif
