@@ -12,13 +12,13 @@
 using namespace CEngine;
 
 Player::Player()
-	: torch(Vector2D(0, 0)), PhysicsObject(bounds)
+	: torch(Vector2D(0, 0)), PhysicsObject(COLOUR_WHITE)
 {
 
 }
 
 Player::Player(Box2D _boundingBox)
-	: torch(_boundingBox.pos + _boundingBox.size/2), PhysicsObject(_boundingBox)
+	: torch(_boundingBox.pos + _boundingBox.size/2), PhysicsObject(_boundingBox, COLOUR_WHITE)
 {	
 	jumping = false;
 	frameCount = 0;
@@ -46,7 +46,7 @@ void Player::SetStanding(bool _standing)
 	standing = _standing;
 }
 
-void Player::Move()
+void Player::Update(float deltaTime)
 {
 	xVel = 0;
 	//Check for vertical movement
@@ -165,4 +165,10 @@ void Player::ReadPosition(TiXmlElement *Object)
 
 	Object->QueryIntAttribute("x", &tempValue); bounds.pos.x = tempValue;
 	Object->QueryIntAttribute("y", &tempValue); bounds.pos.y = tempValue;
+}
+
+//This function should never get called!
+void Player::PlayerCollision(PhysicsObject *target)
+{
+	//Do nothing!
 }

@@ -53,8 +53,10 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
-	//Check for collesions between the player and the world
-	//Checking for collesions between moveable objects too be added
+	//Check for collisions between the player and the world
+	PlayerWorldCollision();
+	player.SetOnSolidGround(true);
+	//Checking for collisions between moveable objects to be added
 	if(WorldCollisionAbove(player.GetBounds()) && !player.GetOnSolidGround())
 		player.ObjectAbove();
 	else if(WorldCollisionBelow(player.GetBounds()) || player.GetStanding())
@@ -62,7 +64,7 @@ void Game::Update(float deltaTime)
 	else//falling
 		player.SetOnSolidGround(false);
 
-	//Check for collesions between the player and the world
+	//Check for collisions between the player and the world
 	if(WorldCollisionLeft(player.GetBounds()))
 		player.ObjectLeft();
 	else if(WorldCollisionRight(player.GetBounds()))
@@ -71,7 +73,7 @@ void Game::Update(float deltaTime)
 		player.SetHittingObject(false);
 
 	//Check for Player movement inputs
-	player.Move();
+	player.Update(deltaTime);
 	
 	//Set player to not standing by default.
 	player.SetStanding(false);
@@ -109,13 +111,13 @@ State *Game::Clone(StateMachine *NewOwner) const
 }
 
 //This function checks for collision against all objects in the world
-bool Game::WorldCollision(Box2D target)
+void Game::PlayerWorldCollision()
 {
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
 	{
-		if ((*cdtr)->CheckCollision(target)) return true;
+		PhysicsObject *collidee = dynamic_cast<PhysicsObject*>(cdtr->get());
+		collidee->PlayerCollision(&player);
 	}
-	return false;
 }
 
 //This function checks for collision against all objects in the world below the player

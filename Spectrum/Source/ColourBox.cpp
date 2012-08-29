@@ -10,7 +10,7 @@
 using namespace CEngine;
 
 ColourBox::ColourBox(Box2D boundingBox, ColourType c)
-	: ColouredObject(boundingBox, c)
+	: PhysicsObject(boundingBox, c)
 {
 	if (colour == COLOUR_RED)
 	{
@@ -31,7 +31,7 @@ ColourBox::ColourBox(Box2D boundingBox, ColourType c)
 }
 
 ColourBox::ColourBox(TiXmlElement *Object, ColourType c)
-	: ColouredObject(c)
+	: PhysicsObject(c)
 {
 	if (colour == COLOUR_RED)
 	{
@@ -98,4 +98,10 @@ GameObject *ColourBox::Clone() const
 bool ColourBox::CheckCollision(const Box2D& target)
 {
 	return (bounds.Overlap(target) && (colour == CurrentColour() || colour == COLOUR_WHITE));
+}
+
+//This function determines what action to take when colliding with the player
+void ColourBox::PlayerCollision(PhysicsObject *target)
+{
+
 }

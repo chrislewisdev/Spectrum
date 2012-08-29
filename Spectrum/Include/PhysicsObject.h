@@ -1,16 +1,16 @@
 #ifndef PhysicsObject_H
 #define PhysicsObject_H
 
-#include <GameObject.h>
+#include "ColouredObject.h"
 #include "Box2D.h"
 
 static const float GRAVITY = 8.0f;
 
-class PhysicsObject : public CEngine::GameObject
+class PhysicsObject : public ColouredObject
 {
 public:
-	PhysicsObject();
-	PhysicsObject(CEngine::Box2D _boundingBox);
+	PhysicsObject(ColourType c);
+	PhysicsObject(CEngine::Box2D _boundingBox, ColourType c);
 	virtual ~PhysicsObject();
 
 	CEngine::Box2D GetBounds() const;
@@ -26,8 +26,6 @@ public:
 	//Function that will reposition the object if it is overlapping with another object.
 	virtual void AdjustPosition(CEngine::Box2D object);
 
-	virtual void Move() = 0;
-
 	//The function that handles a collision with an object below you
 	virtual void ObjectBelow();
 
@@ -39,6 +37,12 @@ public:
 
 	//The function that handles a collision with an object above you
 	virtual void ObjectRight();
+
+	//Virtual collision function for handling collisions with the player
+	virtual void PlayerCollision(PhysicsObject *target) = 0;
+
+	//This function is designed to be used by other objects to move this object around (with an offset) if necessary
+	void OffsetSelf(CEngine::Vector2D offset);
 
 protected:
 	//boolean that states if the object is standing on solid ground.

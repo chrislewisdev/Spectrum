@@ -40,19 +40,18 @@ private:
 
 	bool playerAttached;
 
+	//Pointer to the object that we are carrying!
+	PhysicsObject *carryTarget;
+
 public:	
 
 	MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 		CEngine::Vector2D pointA, CEngine::Vector2D pointB, CEngine::Vector2D pointC, CEngine::Vector2D pointD);
 	//Constructor to take XML data
 	MovingColourBlock(TiXmlElement *Object, ColourType c);
-
-	//Yes this function looks horrible :D
-	//I am going to come back through and tidy it up.
-	void Move();
 	
 	//Inherited Function that controls what happens when the player collides with the block.
-	void Collision(CEngine::Box2D target);	
+	void PlayerCollision(PhysicsObject *target);	
 };
 
 #endif

@@ -1,11 +1,13 @@
 #include "PhysicsObject.h"
 using namespace CEngine;
-PhysicsObject::PhysicsObject()
+PhysicsObject::PhysicsObject(ColourType c)
+	: ColouredObject(c)
 {
 
 }
 
-PhysicsObject::PhysicsObject(CEngine::Box2D _boundingBox)
+PhysicsObject::PhysicsObject(CEngine::Box2D _boundingBox, ColourType c)
+	: ColouredObject(c)
 {
 	bounds = _boundingBox;
 	xVel = 0;
@@ -92,4 +94,9 @@ void PhysicsObject::ObjectRight()
 {
 	hittingObject = true;
 	bounds.pos.x += 8.0;
+}
+
+void PhysicsObject::OffsetSelf(Vector2D offset)
+{
+	bounds.pos += offset;
 }

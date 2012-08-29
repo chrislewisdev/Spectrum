@@ -9,9 +9,11 @@
 #include <ProgramControl.h>
 #include "PhysicsObject.h"
 
-MoveableBlock::MoveableBlock(CEngine::Box2D boundingBox)
+using namespace CEngine;
+
+MoveableBlock::MoveableBlock(Box2D boundingBox)
+	: PhysicsObject(boundingBox, COLOUR_WHITE)
 {
-	bounds = boundingBox;
 	onSolidGround = false;
 }
 
@@ -42,4 +44,9 @@ void MoveableBlock::Draw()
 	//Draw our block-position point
 	glColor3f(.5f, 0, 0);
 	DrawBoundingBox();
+}
+
+void MoveableBlock::PlayerCollision(PhysicsObject *target)
+{
+	//Do nothing for now
 }

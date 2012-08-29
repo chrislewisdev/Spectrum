@@ -7,9 +7,10 @@
 #define SPECTRUM_COLOURBOX_H
 
 #include "ColouredObject.h"
+#include "PhysicsObject.h"
 #include <tinyxml.h>
 
-class ColourBox : public ColouredObject
+class ColourBox : public PhysicsObject
 {
 public:
 	ColourBox(CEngine::Box2D boundingBox, ColourType c);
@@ -25,6 +26,8 @@ public:
 	CEngine::GameObject *Clone() const;
 	//Collision function for boxes- namely, the player (we want to make sure it takes current colour into account)
 	bool CheckCollision(const CEngine::Box2D& target);
+	//Player Collision function (inherited off of PhysicsObject)
+	void PlayerCollision(PhysicsObject *target);
 
 private:
 	//Declare private properties

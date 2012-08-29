@@ -6,6 +6,7 @@
 #include <ProgramControl.h>
 #include <assert.h>
 #include <string>
+#include <CEMath.h>
 
 using namespace std;
 using namespace CEngine;
@@ -29,6 +30,9 @@ MovingColourBlock::MovingColourBlock(CEngine::Box2D boundingBox, ColourType c,
 
 	//Set next point to 1
 	nextPoint = 1;
+
+	playerAttached = false;
+	carryTarget = NULL;
 }
 
 MovingColourBlock::MovingColourBlock(TiXmlElement *Object, ColourType c)
@@ -59,6 +63,9 @@ MovingColourBlock::MovingColourBlock(TiXmlElement *Object, ColourType c)
 
 	bounds.pos = path[0];
 	nextPoint = 1;
+
+	playerAttached = false;
+	carryTarget = NULL;
 }
 
 MovingColourBlock::horizontalDirection MovingColourBlock::CheckHorizontalDirection()
@@ -92,15 +99,10 @@ MovingColourBlock::verticalDirection MovingColourBlock::CheckVerticalDirection()
 //This function performs our GameObject Update, so it'll work when used in generic GameStorage
 void MovingColourBlock::Update(float deltaTime)
 {
-	Move();
-}
-
-void MovingColourBlock::Move()
-{
 	//Check if during the last update the box reached a point.
 	LimitNextPoint();
 
-	if(!CheckIfAtPoint())
+	/*if(!CheckIfAtPoint())
 	{
 		if		(path[nextPoint].x >= bounds.pos.x && path[nextPoint].y >= bounds.pos.y)
 		{
@@ -167,6 +169,35 @@ void MovingColourBlock::Move()
 	{
 		nextPoint++;
 		LimitNextPoint();
+	}*/
+
+	Vector2D direction = path[nextPoint] - bounds.pos;
+
+	if (direction.Length() > 2)
+	{
+		bounds.pos += direction.UnitVector();
+
+		//If we're carrying anyone, move them as well
+		if (playerAttached)
+		{
+			//Check they're still above us!
+			Box2D collisionArea = bounds;
+			collisionArea.pos.y -= 2;
+			if (!collisionArea.Overlap(carryTarget->BoundingBox())) 
+			{
+				playerAttached = false;
+				carryTarget = NULL;
+			}
+			else
+			{
+				carryTarget->OffsetSelf(direction.UnitVector() / 2);
+			}
+		}
+	}
+	else
+	{
+		nextPoint++;
+		LimitNextPoint();
 	}
 }
 
@@ -194,41 +225,50 @@ bool MovingColourBlock::CheckIfMovementKeyIsDown()
 {
 	if (ProgramControl::ProgramInput.GetKey('w'))
 		return true;
-	if (ProgramControl::ProgramInput.GetKey('a'))
+	/*if (ProgramControl::ProgramInput.GetKey('a'))
 		return true;
 	if (ProgramControl::ProgramInput.GetKey('d'))
-		return true;
+		return true;*/
+	else
+		return false;
 }
 
-void MovingColourBlock::Collision(CEngine::Box2D target)
+void MovingColourBlock::PlayerCollision(PhysicsObject *target)
 {
-	if(playerAttached)
+	//Grab the angle to our target (used to determine if the object is above or not)
+	float angle = Math::Angle(bounds.pos + bounds.size/2, target->BoundingBox().pos + target->BoundingBox().size/2);
+	Box2D collisionArea = bounds;
+	collisionArea.pos.y -= 2;
+
+	if (collisionArea.Overlap(target->BoundingBox()))
 	{
 		if(CheckIfMovementKeyIsDown())
 		{
 			playerAttached = false;
+			carryTarget = NULL;
 		}
-		else
+		else if (angle > -135 && angle < -45)
 		{	
 			playerAttached = true;
+			carryTarget = target;
 
-			if(CheckHorizontalDirection() == MovingColourBlock::Left)
+			/*if(CheckHorizontalDirection() == MovingColourBlock::Left)
 			{
-				target.pos.x -= 4.0;
+				target->OffsetSelf(Vector2D(-4, 0));
 			}
 			else if(CheckHorizontalDirection() == MovingColourBlock::Right)
 			{
-				target.pos.x -= 4.0;
+				target->OffsetSelf(Vector2D(4, 0));
 			}
 
 			if(CheckVerticalDirection() == 	MovingColourBlock::Up)
 			{
-				target.pos.y -= 4.0;
+				target->OffsetSelf(Vector2D(0, -4));
 			}
 			else if(CheckVerticalDirection() == MovingColourBlock::Down)
 			{
-				target.pos.y += 4.0;
-			}
+				target->OffsetSelf(Vector2D(0, 4));
+			}*/
 		}
 	}
 }

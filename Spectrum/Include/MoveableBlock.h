@@ -5,10 +5,10 @@
 #ifndef MoveableBlock_H
 #define MoveableBlock_H
 
-#include <GameObject.h>
+#include "PhysicsObject.h"
 #include "Box2D.h"
 
-class MoveableBlock: public CEngine::GameObject
+class MoveableBlock : public PhysicsObject
 {
 public:
 	MoveableBlock(CEngine::Box2D boundingBox);
@@ -19,6 +19,9 @@ public:
 	void ApplyGraivty();
 
 	void Draw();
+
+	//Player Collision function inherited off of PhysicsObject
+	void PlayerCollision(PhysicsObject *target);
 private:
 	float xVel, yVel;
 

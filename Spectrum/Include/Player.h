@@ -30,8 +30,9 @@ public:
 	void SetStanding(bool _standing);
 	
 	void ApplyGravity();
-	//Move the Player according to their keypress
-	void Move();
+
+	//GameObject::Update function- Move code has been 'moved' here
+	void Update(float deltaTime);
 
 	//Draw the player according to their position
 	void Draw();	
@@ -55,6 +56,9 @@ public:
 
 	//Function to read the player's position from Tiled XML data.
 	void ReadPosition(TiXmlElement *Object);
+
+	//This function- oddly enough- should handle collision with the player. But this will never happen!
+	void PlayerCollision(PhysicsObject *target);
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;
@@ -67,8 +71,6 @@ private:
 
 	//Extra variable to track if the player is standing on the ground but not overlapping with the ground.
 	bool standing;
-
-	
 };
 
 #endif
