@@ -34,12 +34,8 @@ void Game::Enter()
 	//Load up our test map
 	LoadMap("test_map.tmx");
 
-	//Add that temp moving colour block
-	//GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(32,32), Vector2D(32,64), Vector2D(64,64), Vector2D(64,32))));
-	GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32),
-		COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
-
-	//GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(300,100,32,32))));
+	//Add that temp moveable colour block
+	GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(384,352,32,32))));
 }
 
 //State Update function
@@ -64,13 +60,7 @@ void Game::Update(float deltaTime)
 	else//falling
 		player.SetOnSolidGround(false);
 
-	//Check for collisions between the player and the world
-	if(WorldCollisionLeft(player.GetBounds()))
-		player.ObjectLeft();
-	else if(WorldCollisionRight(player.GetBounds()))
-		player.ObjectRight();
-	else
-		player.SetHittingObject(false);
+	
 
 	//Check for Player movement inputs
 	player.Update(deltaTime);
@@ -87,6 +77,14 @@ void Game::Update(float deltaTime)
 	{
 		(*cdtr)->Update(deltaTime);
 	}
+
+	//Check for collisions between the player and the world
+	if(WorldCollisionLeft(player.GetBounds()))
+		player.ObjectLeft();
+	else if(WorldCollisionRight(player.GetBounds()))
+		player.ObjectRight();
+	else
+		player.SetHittingObject(false);
 
 	//Draw all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
