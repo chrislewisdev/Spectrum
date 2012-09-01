@@ -34,12 +34,8 @@ void Game::Enter()
 	//Load up our test map
 	LoadMap("test_map.tmx");
 
-	//Add that temp moving colour block
-	//GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32), COLOUR_RED, Vector2D(32,32), Vector2D(32,64), Vector2D(64,64), Vector2D(64,32))));
-	GameStorage->AddObject(GameObjectPointer(new MovingColourBlock(Box2D(100,100,32,32),
-		COLOUR_RED, Vector2D(100,100), Vector2D(200,100), Vector2D(200,200), Vector2D(100,200))));
-
-	//GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(300,100,32,32))));
+	//Add that temp moveable block
+	GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(384,352,32,32))));
 }
 
 //State Update function
@@ -53,30 +49,20 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
-	//Check for collisions between the player and the world
-	PlayerWorldCollision();
 	player.SetOnSolidGround(true);
 	//Checking for collisions between moveable objects to be added
 	if(WorldCollisionAbove(player.GetBounds()) && !player.GetOnSolidGround())
 		player.ObjectAbove();
 	else if(WorldCollisionBelow(player.GetBounds()) || player.GetStanding())
 		player.ObjectBelow();
-	else//falling
-		player.SetOnSolidGround(false);
-
-	//Check for collisions between the player and the world
-	if(WorldCollisionLeft(player.GetBounds()))
-		player.ObjectLeft();
-	else if(WorldCollisionRight(player.GetBounds()))
-		player.ObjectRight();
 	else
-		player.SetHittingObject(false);
+		player.Falling();	
 
 	//Check for Player movement inputs
 	player.Update(deltaTime);
 	
-	//Set player to not standing by default.
-	player.SetStanding(false);
+	//Set player to Falling by default.
+	player.Falling();
 
 	RemoveObjectOverlap();
 
@@ -87,6 +73,17 @@ void Game::Update(float deltaTime)
 	{
 		(*cdtr)->Update(deltaTime);
 	}
+
+	//Check for collisions between the player and the world
+	PlayerWorldCollision();
+
+	//Check for collisions between the player and the world
+	if(WorldCollisionLeft(player.GetBounds()))
+		player.ObjectLeft();
+	else if(WorldCollisionRight(player.GetBounds()))
+		player.ObjectRight();
+	else
+		player.SetHittingObject(false);	
 
 	//Draw all GameObjects
 	for (GameObjectCollection::iterator cdtr = GameStorage->Begin(); cdtr != GameStorage->End(); cdtr++)
