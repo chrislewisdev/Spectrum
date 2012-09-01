@@ -49,8 +49,6 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
 		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
 
-	//Check for collisions between the player and the world
-	PlayerWorldCollision();
 	player.SetOnSolidGround(true);
 	//Checking for collisions between moveable objects to be added
 	if(WorldCollisionAbove(player.GetBounds()) && !player.GetOnSolidGround())
@@ -59,8 +57,6 @@ void Game::Update(float deltaTime)
 		player.ObjectBelow();
 	else//falling
 		player.SetOnSolidGround(false);
-
-	
 
 	//Check for Player movement inputs
 	player.Update(deltaTime);
@@ -77,6 +73,9 @@ void Game::Update(float deltaTime)
 	{
 		(*cdtr)->Update(deltaTime);
 	}
+
+	//Check for collisions between the player and the world
+	PlayerWorldCollision();
 
 	//Check for collisions between the player and the world
 	if(WorldCollisionLeft(player.GetBounds()))

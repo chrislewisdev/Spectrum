@@ -53,12 +53,10 @@ void MoveableBlock::Draw()
 
 bool MoveableBlock::CheckIfMovementKeyIsDown()
 {
-	if (ProgramControl::ProgramInput.GetKey('w'))
-		return true;
-	/*if (ProgramControl::ProgramInput.GetKey('a'))
+	if (ProgramControl::ProgramInput.GetKey('a'))
 		return true;
 	if (ProgramControl::ProgramInput.GetKey('d'))
-		return true;*/
+		return true;
 	else
 		return false;
 }
@@ -80,7 +78,6 @@ void MoveableBlock::PlayerCollision(PhysicsObject *target)
 			{
 				bounds.pos.x += 4.0;
 			}
-		}
-		
+		}		
 	}
 }
