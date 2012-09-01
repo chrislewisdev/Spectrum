@@ -16,6 +16,9 @@ public:
 	//Inherited Function that controls what happens when the player collides with the block.
 	void Collision(float playerXPos, float playerXVe);
 
+	//GameObject Update function- just calls Move()
+	void Update(float deltaTime);
+
 	void ApplyGraivty();
 
 	void Draw();
@@ -26,6 +29,8 @@ private:
 	float xVel, yVel;
 
 	bool onSolidGround;
+
+	bool CheckIfMovementKeyIsDown();
 };
 
 #endif

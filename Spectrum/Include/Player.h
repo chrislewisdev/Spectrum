@@ -31,6 +31,8 @@ public:
 	
 	void ApplyGravity();
 
+	void Falling();
+
 	//GameObject::Update function- Move code has been 'moved' here
 	void Update(float deltaTime);
 

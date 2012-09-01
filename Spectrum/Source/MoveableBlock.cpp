@@ -29,6 +29,11 @@ void MoveableBlock::Collision(float playerXPos, float playerXVel)
 	}
 }
 
+void MoveableBlock::Update(float deltaTime)
+{
+	//ApplyGraivty();
+}
+
 void MoveableBlock::ApplyGraivty()
 {
 	//Checks if the block is falling, if they are apply gravity.
@@ -46,7 +51,33 @@ void MoveableBlock::Draw()
 	DrawBoundingBox();
 }
 
+bool MoveableBlock::CheckIfMovementKeyIsDown()
+{
+	if (ProgramControl::ProgramInput.GetKey('a'))
+		return true;
+	if (ProgramControl::ProgramInput.GetKey('d'))
+		return true;
+	else
+		return false;
+}
+
 void MoveableBlock::PlayerCollision(PhysicsObject *target)
 {
-	//Do nothing for now
+	Box2D collisionArea = bounds;
+	collisionArea.pos.y -= 2;
+
+	if (collisionArea.Overlap(target->BoundingBox()))
+	{
+		if(CheckIfMovementKeyIsDown())
+		{
+			if(target->BoundingBox().pos.x >= bounds.pos.x)//Player to the right of object
+			{
+				bounds.pos.x -= 4.0;
+			}
+			else
+			{
+				bounds.pos.x += 4.0;
+			}
+		}		
+	}
 }

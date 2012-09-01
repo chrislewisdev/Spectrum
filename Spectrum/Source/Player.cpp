@@ -41,9 +41,9 @@ bool Player::GetStanding() const
 	return standing;
 }
 
-void Player::SetStanding(bool _standing)
+void Player::Falling()
 {
-	standing = _standing;
+	standing = false;
 }
 
 void Player::Update(float deltaTime)
