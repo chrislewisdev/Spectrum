@@ -21,7 +21,7 @@ private:
 	std::vector<CEngine::Vector2D> path;
 
 	//Number representing the next point along the path
-	int nextPoint;	
+	unsigned nextPoint;	
 
 	enum horizontalDirection {Left, Right, Not};
 	enum verticalDirection {Up, Down, None};

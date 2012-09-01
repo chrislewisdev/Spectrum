@@ -114,8 +114,10 @@ void Player::Jump()
 	frameCount++;
 	//Checks that the allowed amount of frames has passed before you begin to fall.
 	if(frameCount <= 24)
-	{		
-		yVel = -GRAVITY/2;
+	{	
+		//Checking if removing floating point velocity fixes "getting stuck" issue.
+		int jumpVelocity = -10 - (-GRAVITY*frameCount)/13;
+		yVel = jumpVelocity;
 		jumping = true;
 	}
 	else
