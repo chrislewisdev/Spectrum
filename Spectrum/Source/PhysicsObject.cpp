@@ -3,7 +3,7 @@ using namespace CEngine;
 PhysicsObject::PhysicsObject(ColourType c)
 	: ColouredObject(c)
 {
-
+	isMoveable = false;
 }
 
 PhysicsObject::PhysicsObject(CEngine::Box2D _boundingBox, ColourType c)
@@ -13,6 +13,7 @@ PhysicsObject::PhysicsObject(CEngine::Box2D _boundingBox, ColourType c)
 	xVel = 0;
 	yVel = 0;
 	onSolidGround = false;
+	isMoveable = false;
 }
 
 PhysicsObject::~PhysicsObject()
@@ -30,6 +31,11 @@ bool PhysicsObject::GetOnSolidGround() const
 	return onSolidGround;
 }
 
+bool PhysicsObject::IsMoveable() const
+{
+	return isMoveable;
+}
+
 void PhysicsObject::SetOnSolidGround(bool _onSolidGround)
 {
 	onSolidGround = _onSolidGround;
@@ -38,11 +44,6 @@ void PhysicsObject::SetOnSolidGround(bool _onSolidGround)
 void PhysicsObject::SetHittingObject(bool _hittingObject)
 {
 	hittingObject = _hittingObject;
-}
-
-void PhysicsObject::IncreaseYPos(float y)
-{
-	bounds.pos.y += y;
 }
 
 void PhysicsObject::AdjustPosition(Box2D object)
@@ -55,6 +56,9 @@ void PhysicsObject::AdjustPosition(Box2D object)
 	{
 		bounds.pos.y++;
 	}
+
+	int temp = bounds.pos.y;
+	bounds.pos.y = temp;
 }
 
 void PhysicsObject::ApplyGravity()

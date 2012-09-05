@@ -15,10 +15,10 @@ public:
 
 	CEngine::Box2D GetBounds() const;
 	bool GetOnSolidGround() const;
+	bool IsMoveable() const;
 
 	void SetOnSolidGround(bool _onSolidGround);
 	void SetHittingObject(bool _hittingObject);
-	void IncreaseYPos(float y);
 
 	//Apply Gravity to the object
 	virtual void ApplyGravity();
@@ -53,5 +53,8 @@ protected:
 
 	//Object velocity
 	float xVel,yVel;
+
+	//Used to determine if the object needs to hitTest against other objects.
+	bool isMoveable;
 };
 #endif

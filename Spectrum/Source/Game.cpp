@@ -15,6 +15,7 @@
 #include "Vector2D.h"
 #include "Box2D.h"
 #include "MoveableBlock.h"
+#include "math.h"
 
 using namespace std;
 using namespace CEngine;

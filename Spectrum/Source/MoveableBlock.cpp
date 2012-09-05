@@ -15,6 +15,8 @@ MoveableBlock::MoveableBlock(Box2D boundingBox)
 	: PhysicsObject(boundingBox, COLOUR_WHITE)
 {
 	onSolidGround = false;
+	isMoveable = true;
+	yVel = 0;
 }
 
 void MoveableBlock::Collision(float playerXPos, float playerXVel)
@@ -32,6 +34,8 @@ void MoveableBlock::Collision(float playerXPos, float playerXVel)
 void MoveableBlock::Update(float deltaTime)
 {
 	//ApplyGraivty();
+
+	//bounds.pos.y += yVel;
 }
 
 void MoveableBlock::ApplyGraivty()
@@ -39,7 +43,11 @@ void MoveableBlock::ApplyGraivty()
 	//Checks if the block is falling, if they are apply gravity.
 	if(!onSolidGround)
 	{
-		bounds.pos.y += GRAVITY;
+		yVel = GRAVITY;
+	}
+	else
+	{
+		yVel = 0;
 	}
 }
 

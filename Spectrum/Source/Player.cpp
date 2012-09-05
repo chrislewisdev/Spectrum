@@ -151,13 +151,13 @@ void Player::ObjectAbove()
 void Player::ObjectLeft()
 {
 	hittingObject = true;
-	bounds.pos.x -= 8.0;
+	bounds.pos.x -= 4.0;
 }
 
 void Player::ObjectRight()
 {
 	hittingObject = true;
-	bounds.pos.x += 8.0;
+	bounds.pos.x += 4.0;
 }
 
 //This function loads the player's position from Tiled XML
