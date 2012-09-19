@@ -58,6 +58,7 @@ public:
 
 	//This function- oddly enough- should handle collision with the player. But this will never happen!
 	void PlayerCollision(PhysicsObject *target);
+
 private:
 	//boolean that states if the player is in the middle of a jump
 	bool jumping;
