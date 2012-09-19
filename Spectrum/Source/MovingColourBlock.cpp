@@ -121,7 +121,7 @@ void MovingColourBlock::Update(float deltaTime)
 			}
 			else
 			{
-				carryTarget->OffsetSelf(direction.UnitVector() / 2);
+				carryTarget->OffsetSelf(direction.UnitVector());
 			}
 		}
 	}

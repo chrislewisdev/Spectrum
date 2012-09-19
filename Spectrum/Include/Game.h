@@ -12,6 +12,7 @@
 #include "Vector2D.h"
 #include "Box2D.h"
 #include "Sprite.h"
+#include <queue>
 
 class Game : public CEngine::GameState
 {
@@ -42,10 +43,14 @@ public:
 
 	//This function loads a map from the specified .tmx file
 	void LoadMap(std::string filename);
+	//This function loads the level list from a file
+	void LoadLevelList(std::string filename);
 
 private:
 	//Creates the player
 	Player player;
+	//Queue of level names to load
+	std::queue<std::string> levels;
 
 	void RemoveObjectOverlap();
 };

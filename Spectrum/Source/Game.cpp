@@ -16,6 +16,7 @@
 #include "Box2D.h"
 #include "MoveableBlock.h"
 #include "math.h"
+#include <fstream>
 
 using namespace std;
 using namespace CEngine;
@@ -31,9 +32,12 @@ Game::Game(StateMachine *_Owner, GameData *_Storage)
 void Game::Enter()
 {
 	ColouredObject::SetCurrentColour(COLOUR_RED);
+
+	//Load in our level list
+	LoadLevelList("levels.txt");
 	
 	//Load up our test map
-	LoadMap("test_map.tmx");
+	LoadMap(levels.front());
 
 	//Add that temp moveable colour block
 	GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(384,352,32,32))));
@@ -245,6 +249,34 @@ void Game::LoadMap(string filename)
 		}
 
 		Layer = Layer->NextSiblingElement();
+	}
+}
+
+//This function loads our level list in from a file
+void Game::LoadLevelList(string filename)
+{
+	//Try to open up our file for streaming
+	fstream file(filename);
+
+	//Check for successful opening
+	if (file.bad()) 
+	{
+		MessageBox(NULL, "Couldn't open level list file.", "Error", MB_OK);
+	}
+
+	//Clear out our current list
+	while (!levels.empty())
+	{
+		levels.pop();
+	}
+
+	string tempString;
+
+	//Read in each of our level names
+	while (!file.eof())
+	{
+		file >> tempString;
+		levels.push(tempString);
 	}
 }
 

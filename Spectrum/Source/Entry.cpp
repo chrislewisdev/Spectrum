@@ -52,7 +52,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Objects.AddObject(GameObjectPointer(new ColourBox(temp, COLOUR_YELLOW)));
 
 	//Start up our main game loop
-	while (!Control.IsExiting())
+	while (!Control.IsExiting() && !ProgramControl::ProgramInput.GetKey(VK_ESCAPE))
 	{
 		Control.GetWindow()->ClearScreen();
 

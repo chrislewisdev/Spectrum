@@ -17,7 +17,7 @@
  <objectgroup color="#ff0000" name="red" width="25" height="19">
   <object x="288" y="320" width="64" height="32"/>
   <object x="64" y="448" width="576" height="32"/>
-  <object type="moving" x="512" y="224" width="32" height="32">
+  <object type="moving" x="64" y="96" width="32" height="32">
    <properties>
     <property name="x1" value="100"/>
     <property name="x2" value="200"/>
