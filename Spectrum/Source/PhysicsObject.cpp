@@ -104,3 +104,12 @@ void PhysicsObject::OffsetSelf(Vector2D offset)
 {
 	bounds.pos += offset;
 }
+
+//This function loads the object's position from Tiled XML
+void PhysicsObject::ReadPosition(TiXmlElement *Object)
+{
+	int tempValue;
+
+	Object->QueryIntAttribute("x", &tempValue); bounds.pos.x = tempValue;
+	Object->QueryIntAttribute("y", &tempValue); bounds.pos.y = tempValue;
+}

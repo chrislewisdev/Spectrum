@@ -30,6 +30,9 @@ public:
 	void PlayerCollision(PhysicsObject *target);
 
 private:
+	//Declare private functions
+	void DetermineColour();
+
 	//Declare private properties
 	//Colour values for this box
 	float r, g, b;

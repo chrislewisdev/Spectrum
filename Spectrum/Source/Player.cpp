@@ -160,15 +160,6 @@ void Player::ObjectRight()
 	bounds.pos.x += 4.0;
 }
 
-//This function loads the player's position from Tiled XML
-void Player::ReadPosition(TiXmlElement *Object)
-{
-	int tempValue;
-
-	Object->QueryIntAttribute("x", &tempValue); bounds.pos.x = tempValue;
-	Object->QueryIntAttribute("y", &tempValue); bounds.pos.y = tempValue;
-}
-
 //This function should never get called!
 void Player::PlayerCollision(PhysicsObject *target)
 {

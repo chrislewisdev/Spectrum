@@ -56,9 +56,6 @@ public:
 	//The function that handles a collision with an object above you
 	void ObjectRight();
 
-	//Function to read the player's position from Tiled XML data.
-	void ReadPosition(TiXmlElement *Object);
-
 	//This function- oddly enough- should handle collision with the player. But this will never happen!
 	void PlayerCollision(PhysicsObject *target);
 
