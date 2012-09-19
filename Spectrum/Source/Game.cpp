@@ -38,9 +38,6 @@ void Game::Enter()
 	
 	//Load up our test map
 	LoadMap(levels.front());
-
-	//Add that temp moveable colour block
-	GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(384,352,32,32))));
 }
 
 //State Update function
