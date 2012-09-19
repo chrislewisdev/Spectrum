@@ -3,6 +3,7 @@
 
 #include "ColouredObject.h"
 #include "Box2D.h"
+#include <tinyxml.h>
 
 static const float GRAVITY = 8.0f;
 
@@ -43,6 +44,9 @@ public:
 
 	//This function is designed to be used by other objects to move this object around (with an offset) if necessary
 	void OffsetSelf(CEngine::Vector2D offset);
+
+	//This function reads the object's position from a tiled element
+	void ReadPosition(TiXmlElement *Object);
 
 protected:
 	//boolean that states if the object is standing on solid ground.

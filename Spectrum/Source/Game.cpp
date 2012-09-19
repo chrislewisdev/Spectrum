@@ -23,7 +23,7 @@ using namespace CEngine;
 
 Game::Game(StateMachine *_Owner, GameData *_Storage)
 	: GameState(_Owner, _Storage),
-	player(Box2D(250,250,32,32))
+	player(Box2D(250,250,32,32)), exit(Box2D(0, 0, 32, 32), COLOUR_GREEN)
 {
 	ColouredObject::SetTorch(player.GetTorch());
 }
@@ -37,7 +37,7 @@ void Game::Enter()
 	LoadLevelList("levels.txt");
 	
 	//Load up our test map
-	LoadMap(levels.front());
+	LoadNextMap();
 
 	//Add that temp moveable colour block
 	GameStorage->AddObject(GameObjectPointer(new MoveableBlock(Box2D(384,352,32,32))));
@@ -79,6 +79,13 @@ void Game::Update(float deltaTime)
 		(*cdtr)->Update(deltaTime);
 	}
 
+	//Check for the player hitting the exit
+	if (exit.CheckCollision(player.BoundingBox()))
+	{
+		//Load the next level
+		LoadNextMap();
+	}
+
 	//Check for collisions between the player and the world
 	PlayerWorldCollision();
 
@@ -95,6 +102,7 @@ void Game::Update(float deltaTime)
 	{
 		(*cdtr)->Draw();
 	}
+	exit.Draw();
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
@@ -189,6 +197,9 @@ void Game::LoadMap(string filename)
 	//so we need to check what it is before we do anything with it.
 	TiXmlElement *Layer = Root.FirstChildElement("map")->FirstChildElement();
 
+	//Clear out any existing object data
+	GameStorage->ClearAll();
+
 	//Loop through all layers we can find in the map data
 	while (Layer)
 	{
@@ -204,7 +215,7 @@ void Game::LoadMap(string filename)
 			//Loop through all objects
 			while (Object)
 			{
-				string type(Object->Attribute("type") != NULL ? Object->Attribute("type") : "");
+				string type((Object->Attribute("type") != NULL) ? Object->Attribute("type") : "");
 
 				//Depending on the type of this layer, spawn a certain type of object
 				if (name == "red")
@@ -227,8 +238,12 @@ void Game::LoadMap(string filename)
 				{
 					player.ReadPosition(Object);
 				}
+				else if (name == "exit")
+				{
+					exit.ReadPosition(Object);
+				}
 
-				if (name != "player")
+				if (name != "player" && name != "exit")
 				{
 					if (type == "" || type == "normal")
 					{
@@ -278,6 +293,18 @@ void Game::LoadLevelList(string filename)
 		file >> tempString;
 		levels.push(tempString);
 	}
+}
+
+//This function loads the next map in our queue
+void Game::LoadNextMap()
+{
+	if (levels.empty()) return;
+
+	string nextMap = levels.front();
+
+	LoadMap(nextMap);
+
+	levels.pop();
 }
 
 void Game::RemoveObjectOverlap()

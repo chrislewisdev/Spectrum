@@ -51,8 +51,13 @@ private:
 	Player player;
 	//Queue of level names to load
 	std::queue<std::string> levels;
+	//ColourBox Marker for the level exit
+	ColourBox exit;
 
 	void RemoveObjectOverlap();
+
+	//Loads the next map in the level queue
+	void LoadNextMap();
 };
 
 #endif
