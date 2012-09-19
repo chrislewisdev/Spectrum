@@ -35,12 +35,8 @@ void Game::Enter()
 
 	//Load in our level list
 	LoadLevelList("levels.txt");
-	
-	//Load up our test map
-	LoadMap(levels.front());
-=======
-	LoadNextMap();
 
+	LoadNextMap();
 }
 
 //State Update function
@@ -197,7 +193,7 @@ void Game::LoadMap(string filename)
 {
 	//Create our Root Document handle and open it up
 	TiXmlDocument Root(filename.c_str());
-	if (!Root.LoadFile()) throw std::runtime_error("Failed to open level file.");
+	if (!Root.LoadFile()) throw std::runtime_error(string("Failed to open level file: ") + filename);
 
 	//Get a handle to our first set of 'layer' data in the map. This could be anything from a tile/object layer to tileset info,
 	//so we need to check what it is before we do anything with it.
@@ -222,6 +218,12 @@ void Game::LoadMap(string filename)
 			while (Object)
 			{
 				string type((Object->Attribute("type") != NULL) ? Object->Attribute("type") : "");
+
+				//Convert name to lower-case
+				for (int i = 0; i < name.length(); i++)
+				{
+					name[i] = tolower(name[i]);
+				}
 
 				//Depending on the type of this layer, spawn a certain type of object
 				if (name == "red")
