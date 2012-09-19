@@ -75,8 +75,8 @@ void Player::Update(float deltaTime)
 	//Apply gravity to the player every update.	
 	ApplyGravity();	
 
-	bounds.pos.x += xVel;
-	bounds.pos.y += yVel;
+	bounds.pos.x += xVel*deltaTime*60;
+	bounds.pos.y += yVel*deltaTime*60;
 }
 
 //This function updates the torch's position
