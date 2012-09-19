@@ -9,6 +9,7 @@
 #include "ColouredObject.h"
 #include "PhysicsObject.h"
 #include <tinyxml.h>
+#include "Sprite.h"
 
 class ColourBox : public PhysicsObject
 {
@@ -16,6 +17,7 @@ public:
 	ColourBox(CEngine::Box2D boundingBox, ColourType c);
 	//Constructor to take properties from a TinyXML object element
 	ColourBox(TiXmlElement *Object, ColourType c);
+	~ColourBox();
 
 	//Declare public functions
 	//GameObject Update function
@@ -29,6 +31,11 @@ public:
 	//Player Collision function (inherited off of PhysicsObject)
 	void PlayerCollision(PhysicsObject *target);
 
+protected:
+	//Declare protected functions
+	//This function draws our sprite
+	void DrawSprite();
+
 private:
 	//Declare private functions
 	void DetermineColour();
@@ -36,6 +43,8 @@ private:
 	//Declare private properties
 	//Colour values for this box
 	float r, g, b;
+	//Our sprite
+	Sprite *sprite;
 };
 
 #endif

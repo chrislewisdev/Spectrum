@@ -171,7 +171,7 @@ void MovingColourBlock::PlayerCollision(PhysicsObject *target)
 	Box2D collisionArea = bounds;
 	collisionArea.pos.y -= 2;
 
-	if (collisionArea.Overlap(target->BoundingBox()))
+	if (collisionArea.Overlap(target->BoundingBox()) && (CurrentColour() == Colour() || Colour() == COLOUR_WHITE))
 	{
 		if(CheckIfMovementKeyIsDown())
 		{

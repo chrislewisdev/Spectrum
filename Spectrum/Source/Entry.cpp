@@ -22,10 +22,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ProgramControl Control("Spectrum", 800, 600);
 	GameData& Objects = *Control.GetGameData();
 
-	//Initialise DevIL
-	ilInit();
-	iluInit();
-	ilutRenderer(ILUT_OPENGL);
 	glEnable(GL_TEXTURE_2D);
 
 	//Set up alpa-blending

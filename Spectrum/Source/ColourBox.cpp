@@ -32,19 +32,29 @@ ColourBox::ColourBox(TiXmlElement *Object, ColourType c)
 	Object->QueryIntAttribute("height", &tempValue); bounds.size.y = (float)tempValue;
 }
 
+//Destructor deletes our sprite
+ColourBox::~ColourBox()
+{
+	if (sprite) delete sprite;
+}
+
 void ColourBox::DetermineColour()
 {
+	sprite = NULL;
 	if (colour == COLOUR_RED)
 	{
 		r = 1.0f; g = 0.0f; b = 0.0f;
+		sprite = new Sprite("red.jpg");
 	}
 	else if (colour == COLOUR_BLUE)
 	{
 		r = 0.0f; g = 0.0f; b = 1.0f;
+		sprite = new Sprite("blue.jpg");
 	}
 	else if (colour == COLOUR_YELLOW)
 	{
 		r = 1.0f; g = 1.0f; b = 0.0f;
+		sprite = new Sprite("yellow.jpg");
 	}
 	else if (colour == COLOUR_WHITE)
 	{
@@ -71,15 +81,30 @@ void ColourBox::Draw()
 	{
 		glColor4f(r, g, b, 1.0f);
 
-		DrawBoundingBox();
+		DrawSprite();
 	}
 	else if (PlayerTorch->Overlap(bounds))
 	{
-		glColor4f(r, g, b, 0.25f);
+		glColor4f(1.0f, 1.0f, 1.0f, 0.25f);
+
+		DrawSprite();
+	}
+	glDisable(GL_BLEND);
+}
+
+//This function draws our sprite
+void ColourBox::DrawSprite()
+{
+	if (colour == COLOUR_WHITE || colour == COLOUR_GREEN)
+	{
+		glColor4f(r, g, b, 1.0f);
 
 		DrawBoundingBox();
 	}
-	glDisable(GL_BLEND);
+	else
+	{
+		sprite->Draw(bounds);
+	}
 }
 
 //Clone function

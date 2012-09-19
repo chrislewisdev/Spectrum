@@ -52,7 +52,7 @@ void Game::Update(float deltaTime)
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_2))
 		ColouredObject::SetCurrentColour(COLOUR_BLUE);
 	else if (ProgramControl::ProgramInput.GetKey(SDLK_3))
-		ColouredObject::SetCurrentColour(COLOUR_YELLOW);	
+		ColouredObject::SetCurrentColour(COLOUR_YELLOW);
 
 	player.SetOnSolidGround(true);
 	//Checking for collisions between moveable objects to be added
@@ -106,6 +106,12 @@ void Game::Update(float deltaTime)
 
 	//Draw the player AFTER everything else to help with the alpha blending
 	player.Draw();
+
+	//Check for level reset input
+	if (ProgramControl::ProgramInput.GetKey('r'))
+	{
+		LoadMap(currentMap);
+	}
 }
 
 //State Exit function
@@ -303,6 +309,8 @@ void Game::LoadNextMap()
 	string nextMap = levels.front();
 
 	LoadMap(nextMap);
+
+	currentMap = nextMap;
 
 	levels.pop();
 }

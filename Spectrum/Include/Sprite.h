@@ -32,6 +32,8 @@ private:
 	//Declare private properties
 	//OpenGL texture handle
 	GLuint texture;
+	//Whether or not DevIL is initialised
+	static bool initialised;
 };
 
 #endif

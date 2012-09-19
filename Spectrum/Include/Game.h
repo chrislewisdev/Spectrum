@@ -53,6 +53,8 @@ private:
 	std::queue<std::string> levels;
 	//ColourBox Marker for the level exit
 	ColourBox exit;
+	//Name of the current map file
+	std::string currentMap;
 
 	void RemoveObjectOverlap();
 
