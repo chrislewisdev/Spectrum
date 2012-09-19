@@ -26,7 +26,7 @@ void Sprite::Draw(Box2D area) const
 {
 	glEnable(GL_BLEND);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBegin(GL_QUADS);
 		glTexCoord2f(area.size.x/32, area.size.y/32); glVertex2f(area.pos.x, area.pos.y);
 		glTexCoord2f(area.size.x/32, 0.0f); glVertex2f(area.pos.x, area.pos.y + area.size.y);

@@ -9,6 +9,7 @@
 #include "Box2D.h"
 #include "Torch.h"
 #include <tinyxml.h>
+#include "Sprite.h"
 
 //Player Move Speed
 const float playerMoveSpeed = 4.0;
@@ -71,6 +72,9 @@ private:
 
 	//Extra variable to track if the player is standing on the ground but not overlapping with the ground.
 	bool standing;
+
+	//Player sprite
+	Sprite sprite;
 };
 
 #endif

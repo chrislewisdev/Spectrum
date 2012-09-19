@@ -214,16 +214,16 @@ void Game::LoadMap(string filename)
 			string name(Layer->Attribute("name"));
 			ColourType colour;
 
+			//Convert name to lower-case
+			for (int i = 0; i < name.length(); i++)
+			{
+				name[i] = tolower(name[i]);
+			}
+
 			//Loop through all objects
 			while (Object)
 			{
 				string type((Object->Attribute("type") != NULL) ? Object->Attribute("type") : "");
-
-				//Convert name to lower-case
-				for (int i = 0; i < name.length(); i++)
-				{
-					name[i] = tolower(name[i]);
-				}
 
 				//Depending on the type of this layer, spawn a certain type of object
 				if (name == "red")
@@ -273,6 +273,8 @@ void Game::LoadMap(string filename)
 
 		Layer = Layer->NextSiblingElement();
 	}
+
+	ColouredObject::SetCurrentColour(COLOUR_RED);
 }
 
 //This function loads our level list in from a file

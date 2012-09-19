@@ -79,7 +79,7 @@ void ColourBox::Draw()
 	glEnable(GL_BLEND);
 	if (colour == CurrentColour() || colour == COLOUR_WHITE || colour == COLOUR_GREEN)
 	{
-		glColor4f(r, g, b, 1.0f);
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 		DrawSprite();
 	}

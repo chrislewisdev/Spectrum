@@ -12,13 +12,13 @@
 using namespace CEngine;
 
 Player::Player()
-	: torch(Vector2D(0, 0)), PhysicsObject(COLOUR_WHITE)
+	: torch(Vector2D(0, 0)), PhysicsObject(COLOUR_WHITE), sprite("dog.png")
 {
 
 }
 
 Player::Player(Box2D _boundingBox)
-	: torch(_boundingBox.pos + _boundingBox.size/2), PhysicsObject(_boundingBox, COLOUR_WHITE)
+	: torch(_boundingBox.pos + _boundingBox.size/2), PhysicsObject(_boundingBox, COLOUR_WHITE), sprite("dog.png")
 {	
 	jumping = false;
 	frameCount = 0;
@@ -93,7 +93,8 @@ void Player::Draw()
 {
 	//Draw our player-position point
 	glColor3f(1,1,1);
-	DrawBoundingBox();
+	//DrawBoundingBox();
+	sprite.Draw(bounds);
 	glEnable(GL_BLEND);
 	glColor4f(0.7f, 0.7f, 0.7f, 0.5f);
 	torch.Draw();
